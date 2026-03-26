@@ -1,0 +1,422 @@
+.presentation-page {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Hero */
+.presentation-banniere {
+  width: 100vw;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../Images/BanniereAccueil.png');
+  background-size: cover;
+  background-position: center;
+}
+
+
+/* About us 2 */
+.aboutus2-section {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.about-us-2-content {
+  width: 80vw;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.aboutus2-images {
+  width: 40%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cadre-bleu2 {
+  width: 200px;
+  height: 200px;
+  background-color: rgba(76, 201, 240, 0.85);
+  margin-top: -225px;
+  margin-left: -13px;
+  z-index: 1;
+  position: absolute;
+}
+
+
+.aboutus2-img-col {
+  flex: 1;
+  background-color: #817777;
+}
+
+.aboutus2-img-col:nth-child(1) {
+  height: 80%;
+}
+
+.aboutus2-img-col:nth-child(2) {
+  height: 100%;
+}
+
+.aboutus2-img-col:nth-child(3) {
+  height: 80%;
+}
+
+.aboutus2-text {
+  width: 58%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.aboutus2-text p {
+  color: var(--text-light, #666);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.section-subtitle-blue {
+  color: var(--primary-color, #4cc9f0);
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.section-title-dark {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--text-dark, #222);
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.section-title-dark span {
+  color: var(--primary-color, #4cc9f0);
+}
+
+/* Stats */
+.stats-section {
+  padding: 60px 10vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-item h3 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--text-dark, #222);
+  margin: 0 0 10px 0;
+}
+
+.stat-item p {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-dark, #222);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Mission & Engagements (Zigzag) */
+.mission-section {
+  width: 100vw;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  background-color: var(--light-color);
+}
+
+.principes {
+  width: 80vw;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  background-color: #404f5e;
+}
+
+.mission-row {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.mission-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.mission-img {
+  width: 45%;
+  height: 450px;
+}
+
+.mission-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mission-text {
+  width: 55%;
+}
+
+.mission-text p {
+  color: var(--text-light, #666);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.mission-text ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.mission-text li {
+  color: var(--text-light, #666);
+  line-height: 1.8;
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.mission-text li:before {
+  content: '•';
+  color: var(--primary-color, #4cc9f0);
+  font-size: 1.5rem;
+  position: absolute;
+  left: 0;
+  top: -2px;
+}
+
+.mission-text li strong {
+  color: var(--text-dark, #222);
+}
+
+/* Pourquoi Nous */
+.pourquoi-section {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  background-color: var(--light-color);
+}
+
+.raisons-grid {
+  width: 80vw;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
+  text-align: left;
+}
+
+.raison-card {
+  display: flex;
+  gap: 25px;
+}
+
+.raison-icon {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  color: var(--primary-color, #4cc9f0);
+}
+
+.raison-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.raison-text h4 {
+  font-size: 1.3rem;
+  color: var(--text-dark, #222);
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.raison-text h4 span {
+  color: var(--primary-color, #4cc9f0);
+}
+
+.raison-text p {
+  color: var(--text-light, #666);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Mot du Directeur */
+.directeur-section {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.directeur-img {
+  width: 30%;
+  height: 100%;
+}
+
+.cadre-bleu3 {
+  width: 200px;
+  height: 200px;
+  background-color: rgba(76, 201, 240, 0.85);
+  margin-left: -13px;
+  z-index: 1;
+  position: absolute;
+}
+
+
+
+
+/* Team section */
+.team-section {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.team-grid {
+  width: 80vw;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.team-card {
+  background: var(--bg-white, #fff);
+  text-align: center;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20px 30px 20px;
+  height: auto;
+  height: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.team-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  border-color: rgba(76, 201, 240, 0.85);
+}
+
+.team-header {
+  margin-bottom: 25px;
+}
+
+.team-name {
+  font-size: 1.4rem;
+  color: #003049;
+  /* Deep blue to match mockup feeling */
+  margin-bottom: 5px;
+  font-weight: 800;
+}
+
+.team-role {
+  color: rgba(76, 201, 240, 0.85) !important;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.team-img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background: #fdfdfd;
+  overflow: hidden;
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Removed bottom gradient */
+
+.team-social {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 15px;
+}
+
+.team-social a {
+  color: #1a1a1a;
+  transition: color 0.3s;
+}
+
+.team-social a:hover {
+  color: rgba(76, 201, 240, 0.85);
+}
+
+.team-social svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Expertises shared adjustments */
+.presentation-page .section-tittle-box {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.presentation-page .services-section {
+  height: auto;
+  padding: 100px 0 150px 0;
+  background-color: #fff;
+}

@@ -1,0 +1,243 @@
+/* Realisations.css */
+.realisations-page {
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--bg-light, #f4f6f8);
+}
+
+/* Banner */
+.realisations-banniere {
+  width: 100vw;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../Images/BanniereAccueil.png');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.realisations-banniere h2 {
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  max-width: 900px;
+  line-height: 1.4;
+}
+
+.realisations-banniere h2 .white-bg {
+  background-color: #fff;
+  color: var(--text-dark, #222);
+  padding: 5px 15px;
+}
+
+.realisations-banniere h2 .blue-bg {
+  background-color: var(--primary-color, #4cc9f0);
+  color: #fff;
+  padding: 5px 15px;
+  margin-left: -5px;
+}
+
+/* Header Text */
+.realisations-header {
+  text-align: center;
+  padding: 60px 10px;
+  background: #fff;
+}
+
+.realisations-subtitle {
+  color: var(--primary-color, #4cc9f0);
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.realisations-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--text-dark, #222);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.realisations-title span {
+  color: var(--primary-color, #4cc9f0);
+}
+
+.realisations-desc {
+  color: var(--text-light, #666);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Filter Bar */
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  background-color: #e0e0e0;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.filter-btn {
+  padding: 15px 30px;
+  background: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--text-dark, #222);
+  cursor: pointer;
+  transition: all 0.3s;
+  flex: 1;
+}
+
+.filter-btn:hover {
+  background: #d0d0d0;
+}
+
+.filter-btn.active {
+  background-color: var(--primary-color, #4cc9f0);
+  color: #fff;
+}
+
+/* Cards */
+.realisations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 10vw 80px 10vw;
+}
+
+.realisation-card {
+  display: flex;
+  background: #e6e6e6;
+  gap: 40px;
+  align-items: center;
+}
+
+.realisation-img-container {
+  width: 45%;
+  height: 350px;
+  position: relative;
+}
+
+.realisation-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.before-img.visible, .after-img.visible {
+  opacity: 1;
+  z-index: 1;
+}
+
+.before-img.hidden, .after-img.hidden {
+  opacity: 0;
+  z-index: 0;
+}
+
+.avant-apres-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 8px 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: flex;
+  gap: 10px;
+  border-radius: 4px;
+  z-index: 3;
+}
+
+.avant-apres-badge span.avant,
+.avant-apres-badge span.apres {
+  color: #888;
+  transition: color 0.3s;
+}
+
+.avant-apres-badge span.avant.active,
+.avant-apres-badge span.apres.active {
+  color: var(--primary-color, #4cc9f0);
+}
+
+.realisation-text {
+  width: 55%;
+  padding-right: 40px;
+}
+
+.realisation-text h3 {
+  font-size: 1.1rem;
+  color: var(--primary-color, #4cc9f0);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.realisation-text p {
+  color: var(--text-dark, #222);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.voir-plus-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.voir-plus-btn {
+  background-color: var(--primary-color, #4cc9f0);
+  color: #fff;
+  border-radius: 50px;
+  padding: 15px 40px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.voir-plus-btn:hover {
+  background-color: var(--primary-dark, #3baed1);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(76, 201, 240, 0.3);
+}
+
+@media (max-width: 992px) {
+  .realisation-card {
+    flex-direction: column;
+  }
+
+  .realisation-img-container,
+  .realisation-text {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90vw;
+  }
+}

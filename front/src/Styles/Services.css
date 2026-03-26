@@ -1,0 +1,155 @@
+/* Services.css */
+
+
+.services-banniere {
+  width: 100vw;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../Images/BanniereAccueil.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.services-banniere h2 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  max-width: 900px;
+  line-height: 1.2;
+}
+
+.services-banniere h2 span {
+  background-color: var(--primary-color, rgba(76, 201, 240, 0.85));
+  padding: 5px 15px;
+}
+
+/* Zigzag Detailed Services */
+.services-details-section {
+  padding: 100px 10vw;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  background-color: #fff;
+}
+
+.service-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.service-detail-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.service-detail-img {
+  width: 45%;
+  height: 450px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.service-detail-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.service-detail-row:hover .service-detail-img img {
+  transform: scale(1.1);
+}
+
+.service-detail-text {
+  width: 55%;
+  transition: transform 0.4s ease;
+}
+
+.service-detail-row:hover .service-detail-text {
+  transform: translateX(10px);
+}
+
+.service-detail-row.reverse:hover .service-detail-text {
+  transform: translateX(-10px);
+}
+
+.service-detail-text h2 {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #000;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.service-detail-text h2 span {
+  color: var(--primary-color, #4cc9f0);
+}
+
+.service-detail-text p {
+  color: var(--text-dark, #222);
+  line-height: 1.8;
+  font-size: 1.05rem;
+  margin-bottom: 30px;
+}
+
+.service-btn {
+  display: inline-block;
+  padding: 15px 30px;
+  background-color: var(--primary-color, #4cc9f0);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.service-btn:hover {
+  background-color: #3bb5d9;
+}
+
+@media (max-width: 992px) {
+  .slanted-panel {
+    transform: none;
+    border-right: none;
+    border-bottom: 5px solid #fff;
+    flex-direction: column;
+  }
+
+  .services-banniere-slanted {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .slanted-image {
+    width: 100%;
+    left: 0;
+    transform: none;
+    position: relative;
+    height: 250px;
+  }
+
+  .slanted-title {
+    transform: translate(-50%, -50%);
+  }
+
+  .service-detail-row {
+    flex-direction: column;
+  }
+
+  .service-detail-row.reverse {
+    flex-direction: column;
+  }
+
+  .service-detail-img,
+  .service-detail-text {
+    width: 100%;
+  }
+}
