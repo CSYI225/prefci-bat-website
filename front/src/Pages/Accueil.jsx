@@ -127,7 +127,7 @@ const Accueil = () => {
       <section className="services-section">
         <div className="section-tittle-box reveal reveal-up">
           <h4 className="section-subtitle">NOS EXPERTISES</h4>
-          <h2 className="section-title">DES SOLUTIONS <br /><span>ADAPTÉES À CHAQUE SITUATION</span></h2>
+          <h2 className="section-title2">DES SOLUTIONS <br /><span>ADAPTÉES À CHAQUE SITUATION</span></h2>
           <p className="services-desc">
             Nous proposons une large gamme de services pour répondre à tous vos besoins d'installation, de réparation et d'entretien.
           </p>
@@ -135,7 +135,7 @@ const Accueil = () => {
         <div className="services">
           {[
             { title: "Plomberie", desc: "Installation, réparation, fuite" },
-            { title: "Sanitaire", desc: "Installation, réparation, fuite" },
+            { title: "Etanchéité", desc: "Installation, réparation, fuite" },
             { title: "Froid & Climatisation", desc: "Installation, réparation, fuite" }
           ].map((service, i) => (
             <div 
@@ -238,7 +238,7 @@ const Accueil = () => {
       <section className="avis-section">
         <div className="section-tittle-box reveal reveal-up">
           <h4 className="section-subtitle">AVIS DE NOS CLIENTS</h4>
-          <h2 className="section-title">CE QUE PENSENT <span>NOS CLIENTS</span></h2>
+          <h2 className="section-title2">CE QUE PENSENT <span>NOS CLIENTS</span></h2>
           <p className="avis-desc">Ces témoignages reflètent notre engagement envers un service de qualité et irréprochable.</p>
         </div>
 

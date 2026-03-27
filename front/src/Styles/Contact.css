@@ -44,7 +44,7 @@
 
 .contact-info {
   width: 35%;
-  background-color: #f1f1f1;
+  background-color: rgba(31, 41, 55, 0.9);
   padding: 50px;
 }
 
@@ -55,12 +55,12 @@
 .contact-info-block h3 {
   font-size: 1.5rem;
   font-weight: 900;
-  color: var(--text-dark, #222);
+  color: #4cc9f0;
   margin-bottom: 15px;
 }
 
 .contact-info-block p {
-  color: var(--text-dark, #222);
+  color: #fff;
   line-height: 1.6;
   font-size: 1rem;
   margin: 0;
@@ -112,9 +112,13 @@
   flex: 1;
   padding: 15px;
   border: none;
-  background-color: #f1f1f1;
+  background-color: rgba(31, 41, 55, 0.9);
   font-family: inherit;
   font-size: 0.95rem;
+  color: #fff;
+}
+.contact-form .form-row ::placeholder{
+  color: #fff;
 }
 
 .contact-form .form-row textarea {

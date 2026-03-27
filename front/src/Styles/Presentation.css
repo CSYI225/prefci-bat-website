@@ -112,10 +112,14 @@
 
 /* Stats */
 .stats-section {
-  padding: 60px 10vw;
+  width: 100vw;
+  height: 30vh;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  background-color: rgba(31, 41, 55, 0.95);
+  margin-bottom: 30px;
 }
 
 .stat-item {
@@ -126,14 +130,14 @@
 .stat-item h3 {
   font-size: 3.5rem;
   font-weight: 900;
-  color: var(--text-dark, #222);
+  color: #fff;
   margin: 0 0 10px 0;
 }
 
 .stat-item p {
   font-size: 1rem;
   font-weight: bold;
-  color: var(--text-dark, #222);
+  color: #fff;
   text-transform: uppercase;
   margin: 0;
 }
@@ -146,7 +150,6 @@
   align-items: center;
   align-content: center;
   justify-content: center;
-  background-color: var(--light-color);
 }
 
 .principes {
@@ -217,6 +220,13 @@
   color: var(--text-dark, #222);
 }
 
+.services-desc2 {
+  max-width: 65vw;
+  margin: 0 auto 40px auto;
+  color: var(--text-light, #666);
+  text-align: center;
+}
+
 /* Pourquoi Nous */
 .pourquoi-section {
   width: 100vw;
@@ -281,6 +291,7 @@
   align-items: center;
   align-content: center;
   justify-content: center;
+  background-color: rgba(31, 41, 55, 0.95);
 }
 
 .directeur-img {

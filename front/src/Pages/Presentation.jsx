@@ -95,14 +95,14 @@ const Presentation = () => {
                 <div className="section-tittle-box reveal reveal-up">
                     <h4 className="section-subtitle">NOS EXPERTISES</h4>
                     <h2 className="section-title">DES SOLUTIONS <br /><span>ADAPTÉES À CHAQUE SITUATION</span></h2>
-                    <p className="services-desc">
+                    <p className="services-desc2">
                         Nous proposons une large gamme de services pour répondre à tous vos besoins d'installation, de réparation et d'entretien.
                     </p>
                 </div>
                 <div className="services">
                     {[
                         { title: 'Plomberie', desc: 'Installation, réparation, fuite' },
-                        { title: 'Sanitaire', desc: 'Installation, réparation, fuite' },
+                        { title: 'Etanchéité', desc: 'Installation, réparation, fuite' },
                         { title: 'Froid & Climatisation', desc: 'Installation, réparation, fuite' }
                     ].map((service, i) => (
                         <div 
@@ -129,7 +129,7 @@ const Presentation = () => {
                 <div className="section-tittle-box reveal reveal-up">
                     <h4 className="section-subtitle">VOTRE SATISFACTION, NOTRE PRIORITÉ</h4>
                     <h2 className="section-title">POURQUOI TRAVAILLER <br /><span>AVEC NOUS ?</span></h2>
-                    <p className="services-desc">
+                    <p className="services-desc2">
                         Nous mettons à votre service une équipe expérimentée et des équipements modernes pour des résultats impeccables.
                     </p>
                 </div>
@@ -159,16 +159,16 @@ const Presentation = () => {
                     </div>
                     <div className="aboutus-text reveal reveal-right">
                         <span className="section-subtitle-left">MOT DU DIRECTEUR</span>
-                        <h2 className="section-title-left">WILLIAMS KOFFI</h2>
-                        <p>
+                        <h2 className="section-title-left2">WILLIAMS KOFFI</h2>
+                        <span>
                             " Chez PREFCI-BAT SARL, nous avons fait le choix de placer l'humain et la qualité de service au cœur de notre métier. Depuis nos débuts, l'exigence des interventions et des chantiers bien conçus montre l'importance de faire un travail d'une qualité infaillible."
-                        </p>
-                        <p>
+                        </span>
+                        <span>
                             "Chaque projet que nous réalisons est le reflet de notre engagement. Le dynamisme et l'expertise de notre équipe nous permettent de proposer des résultats à la hauteur des attentes de nos clients. Nous restons disponibles et attentifs, garantissant la confiance mutuelle."
-                        </p>
-                        <p>
+                        </span>
+                        <span>
                             "Nous vous remercions pour travailler avec nous ; notre équipe est toujours prêt à s'engager avec sérieux pour répondre à toutes vos exigences."
-                        </p>
+                        </span>
                     </div>
                 </div>
             </section>

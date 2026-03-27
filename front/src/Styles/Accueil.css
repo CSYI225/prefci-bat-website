@@ -102,6 +102,11 @@
   color: var(--text-light);
   line-height: 1.8;
 }
+.aboutus-text span {
+  margin-bottom: 20px;
+  color: #fff;
+  line-height: 1.8;
+}
 
 /* Services Section */
 .services-section {
@@ -112,8 +117,7 @@
   align-items: center;
   align-content: center;
   justify-content: center;
-  background-color: var(--bg-light);
-
+  background-color: rgba(31, 41, 55, 0.95);
 }
 
 .section-tittle-box {
@@ -129,7 +133,7 @@
 .services-desc {
   max-width: 65vw;
   margin: 0 auto 40px auto;
-  color: var(--text-light);
+  color: #fff;
   text-align: center;
 }
 
@@ -453,12 +457,13 @@
   align-items: center;
   align-content: center;
   justify-content: center;
+  background-color: rgba(31, 41, 55, 0.95);
 }
 
 .avis-desc {
   max-width: 600px;
   margin: 0 auto 40px auto;
-  color: var(--text-light);
+  color: #fff;
   text-align: center;
 }
 

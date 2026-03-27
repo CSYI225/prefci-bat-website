@@ -1,14 +1,3 @@
-/* .hero-section {
-  position: relative;
-  min-height: 600px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center top;
-  background-attachment: fixed;
-  display: flex;
-  flex-direction: column;
-} */
-
 .header {
   width: 100%;
   height: 80px;
@@ -27,6 +16,11 @@
 .logo-container {
   display: flex;
   align-items: center;
+}
+
+.logo-container img {
+  width: 60px;
+  height: 60px;
 }
 
 .pages ul {

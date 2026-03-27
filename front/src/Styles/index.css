@@ -140,6 +140,13 @@ img {
   color: var(--text-dark);
   text-align: center;
 }
+.section-title2 {
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: #fff;
+  text-align: center;
+}
 
 .section-title-left {
   font-size: 2.2rem;
@@ -148,12 +155,25 @@ img {
   color: var(--text-dark);
   text-align: left;
 }
+.section-title-left2 {
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: #fff;
+  text-align: left;
+}
 
 .section-title span {
   color: var(--primary-color);
 }
+.section-title2 span {
+  color: var(--primary-color);
+}
 
 .section-title-left span {
+  color: var(--primary-color);
+}
+.section-title-left2 span {
   color: var(--primary-color);
 }
 

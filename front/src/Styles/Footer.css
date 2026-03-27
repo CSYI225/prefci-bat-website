@@ -1,5 +1,5 @@
 .footer-section {
-  background-color: #1a1a1a;
+  background-color: rgba(31, 41, 55, 0.95);
   color: #fff;
   padding: 80px 10vw 40px 10vw;
   font-family: inherit;
@@ -99,7 +99,7 @@
 .footer-bottom {
   margin-top: 60px;
   padding-top: 30px;
-  border-top: 1px solid #333;
+  border-top: 1px solid #888888b3;
   text-align: center;
   color: #888;
   font-size: 0.9rem;
