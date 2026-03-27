@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AdminPageContent {
+  id        Int      @id @default(autoincrement())
+  pageKey   String   @unique // accueil, presentation, services, realisations, contact
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Page {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique // Accueil, Presentation, Services, Realisations, Contact
+  slug      String    @unique
+  sections  Section[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Section {
+  id        Int      @id @default(autoincrement())
+  type      String   // hero, about, mission, cta, etc.
+  order     Int      @default(0)
+  pageId    Int
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  content   Json?    // Structured content: { title: "...", subtitle: "...", description: "...", image: "..." }
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String   @db.Text
+  image       String?
+  icon        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Realisation {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String   @db.Text
+  category    String
+  client      String?
+  project     String?
+  imgBefore   String
+  imgAfter    String?
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String?
+  content   String   @db.Text
+  avatar    String?
+  rating    Int      @default(5)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Partner {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  logo      String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TeamMember {
+  id          Int      @id @default(autoincrement())
+  name        String
+  role        String
+  image       String
+  socialLinks Json?    // { linkedin: "...", instagram: "...", facebook: "...", x: "...", youtube: "..." }
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Stat {
+  id        Int      @id @default(autoincrement())
+  label     String
+  value     String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DevisRequest {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String?
+  message     String   @db.Text
+  serviceType String?
+  status      String   @default("NEW") // NEW, TREATED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+

@@ -1,0 +1,205 @@
+﻿node.exe : [96msrc/au
+th/auth.module.ts[0m:
+[93m17[0m:[93m7[0m
+ - 
+[91merror[0m[90m 
+TS2322: [0mType 
+'(configService: 
+ConfigService) => 
+Promise<{ secret: 
+string | undefined; 
+signOptions: { 
+expiresIn: string | 
+undefined; }; }>' is 
+not assignable to 
+type '(...args: 
+any[]) => 
+JwtModuleOptions | Pro
+mise<JwtModuleOptions>
+'.
+Au caractère 
+C:\Program Files\nodej
+s\npx.ps1:29 : 3
++   & $NODE_EXE 
+$NPX_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: ([96msrc/a   
+ uth/a...oduleOpti    
+ons>'.:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  Type 'Promise<{ 
+secret: string | 
+undefined; 
+signOptions: { 
+expiresIn: string | 
+undefined; }; }>' is 
+not assignable to 
+type 
+'JwtModuleOptions | Pr
+omise<JwtModuleOptions
+>'.
+    Type 'Promise<{ 
+secret: string | 
+undefined; 
+signOptions: { 
+expiresIn: string | 
+undefined; }; }>' is 
+not assignable to 
+type 'Promise<JwtModul
+eOptions>'.
+      Type '{ secret: 
+string | undefined; 
+signOptions: { 
+expiresIn: string | 
+undefined; }; }' is 
+not assignable to 
+type 
+'JwtModuleOptions'.
+        The types of '
+signOptions.expiresIn'
+ are incompatible 
+between these types.
+          Type 
+'string | undefined' 
+is not assignable to 
+type 'number | 
+StringValue | 
+undefined'.
+            Type 
+'string' is not 
+assignable to type 
+'number | StringValue 
+| undefined'.
+
+[7m17[0m       
+useFactory: async 
+(configService: 
+ConfigService) => ({
+[7m  [0m [91m      
+~~~~~~~~~~[0m
+
+  [96mnode_modules/@n
+estjs/jwt/dist/interfa
+ces/jwt-module-options
+.interface.d.ts[0m:[
+93m24[0m:[93m5[0m
+    [7m24[0m     
+useFactory?: 
+(...args: any[]) => Pr
+omise<JwtModuleOptions
+> | JwtModuleOptions;
+    [7m  [0m [96m  
+  ~~~~~~~~~~[0m
+    The expected type 
+comes from property 
+'useFactory' which is 
+declared here on type 
+'JwtModuleAsyncOptions
+'
+[96msrc/auth/jwt.stra
+tegy.ts[0m:[93m9[0m
+:[93m11[0m - 
+[91merror[0m[90m 
+TS2345: [0mArgument 
+of type '[{ 
+jwtFromRequest: JwtFro
+mRequestFunction<any>;
+ ignoreExpiration: 
+false; secretOrKey: 
+string | undefined; 
+}]' is not assignable 
+to parameter of type 
+'[opt: StrategyOptions
+WithRequest] | [opt: S
+trategyOptionsWithoutR
+equest]'.
+  Type '[{ 
+jwtFromRequest: JwtFro
+mRequestFunction<any>;
+ ignoreExpiration: 
+false; secretOrKey: 
+string | undefined; 
+}]' is not assignable 
+to type '[opt: Strateg
+yOptionsWithoutRequest
+]'.
+    Type '{ 
+jwtFromRequest: JwtFro
+mRequestFunction<any>;
+ ignoreExpiration: 
+false; secretOrKey: 
+string | undefined; 
+}' is not assignable 
+to type 'StrategyOptio
+nsWithoutRequest'.
+      Type '{ 
+jwtFromRequest: JwtFro
+mRequestFunction<any>;
+ ignoreExpiration: 
+false; secretOrKey: 
+string | undefined; 
+}' is not assignable 
+to type 'Omit<WithSecr
+etOrKey, "secretOrKeyP
+rovider"> & { 
+passReqToCallback?: 
+false | undefined; }'.
+        Type '{ 
+jwtFromRequest: JwtFro
+mRequestFunction<any>;
+ ignoreExpiration: 
+false; secretOrKey: 
+string | undefined; 
+}' is not assignable 
+to type 'Omit<WithSecr
+etOrKey, "secretOrKeyP
+rovider">'.
+          Types of 
+property 
+'secretOrKey' are 
+incompatible.
+            Type 
+'string | undefined' 
+is not assignable to 
+type 'string | Buffer<
+ArrayBufferLike>'.
+              Type 
+'undefined' is not 
+assignable to type 
+'string | Buffer<Array
+BufferLike>'.
+
+[7m  9[0m     
+super({
+[7m   [0m [91m     
+     ~[0m
+[7m 10[0m       
+jwtFromRequest: Extrac
+tJwt.fromAuthHeaderAsB
+earerToken(),
+[7m   [0m [91m~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 12[0m       
+secretOrKey: configSer
+vice.get<string>('JWT_
+SECRET'),
+[7m   [0m [91m~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~[0m
+[7m 13[0m     });
+[7m   [0m 
+[91m~~~~~[0m
+
+Found 2 error(s).
+

@@ -1,0 +1,44 @@
+===========================================================
+    MANUEL D'UTILISATION - PLATEFORME PREFCI-BAT SARL
+===========================================================
+
+Ce document résume comment faire fonctionner votre nouvelle plateforme.
+
+1. ARCHITECTURE DU PROJET
+-------------------------
+- /back  : Serveur NestJS (Gère la base de données, l'auth, les mails).
+- /admin : Interface React (Panneau de contrôle pour gérer le contenu).
+- /front : Site public (Vitrine pour vos clients).
+
+2. LANCEMENT RAPIDE (EN 3 ÉTAPES)
+---------------------------------
+A. BASE DE DONNÉES : 
+   - Assurez-vous que MySQL est actif.
+   - Dans le dossier 'back', lancez : 
+     npx prisma db push
+     npx prisma db seed (pour créer le compte admin)
+
+B. BACKEND (API) :
+   - Dans le dossier 'back', lancez : 
+     npm run start:dev
+
+C. ADMINISTRATION :
+   - Dans le dossier 'admin', lancez : 
+     npm run dev
+
+3. INFORMATIONS DE CONNEXION
+----------------------------
+- Interface Admin : http://localhost:5173
+- Email Admin    : admin@prefci-bat.com
+- Mot de passe   : adminpassword123
+
+4. FONCTIONNALITÉS CLÉS
+-----------------------
+- Gestion des Pages : Créez et modifiez les pages (Accueil, Services, etc.)
+- Éditeur de Sections : Modifiez le texte et liez des images à chaque section.
+- Médiathèque : Téléchargez vos photos pour les utiliser sur le site.
+- Suivi des Devis : Recevez et traitez les demandes de vos clients.
+
+===========================================================
+          ÉQUIPE DE DÉVELOPPEMENT PREFCI-BAT
+===========================================================
