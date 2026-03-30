@@ -17,31 +17,86 @@ let RealisationsService = class RealisationsService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createRealisationDto) {
-        return this.prisma.realisation.create({
-            data: createRealisationDto,
-        });
+    mapToClient(r) {
+        if (!r)
+            return null;
+        return {
+            idRealisation: r.idRealisation,
+            titre: r.titre,
+            descriptionProjet: r.descriptionProjet,
+            descriptionClient: r.descriptionClient,
+            imageAvant: r.imageAvant,
+            imageApres: r.imageApres,
+            idCategorie: r.idCategorie,
+            nomClient: r.nomClient,
+            dateRealisation: r.dateRealisation,
+            categorie: r.categorie
+        };
     }
-    findAll() {
-        return this.prisma.realisation.findMany({
-            orderBy: { order: 'asc' },
+    async create(dto) {
+        const r = await this.prisma.realisation.create({
+            data: {
+                titre: dto.titre,
+                descriptionProjet: dto.descriptionProjet,
+                descriptionClient: dto.descriptionClient,
+                imageAvant: dto.imageAvant,
+                imageApres: dto.imageApres,
+                idCategorie: dto.idCategorie,
+                nomClient: dto.nomClient,
+            },
         });
+        return this.mapToClient(r);
     }
-    findOne(id) {
-        return this.prisma.realisation.findUnique({
-            where: { id },
+    async findAll() {
+        const reals = await this.prisma.realisation.findMany({
+            include: { categorie: true },
+            orderBy: { idRealisation: 'desc' },
         });
+        return reals.map(r => this.mapToClient(r));
     }
-    update(id, updateRealisationDto) {
-        return this.prisma.realisation.update({
-            where: { id },
-            data: updateRealisationDto,
+    async findOne(idRealisation) {
+        const r = await this.prisma.realisation.findUnique({
+            where: { idRealisation },
+            include: { categorie: true },
         });
+        return this.mapToClient(r);
     }
-    remove(id) {
-        return this.prisma.realisation.delete({
-            where: { id },
+    async update(idRealisation, dto) {
+        try {
+            const r = await this.prisma.realisation.update({
+                where: { idRealisation },
+                data: {
+                    titre: dto.titre,
+                    descriptionProjet: dto.descriptionProjet,
+                    descriptionClient: dto.descriptionClient,
+                    imageAvant: dto.imageAvant,
+                    imageApres: dto.imageApres,
+                    idCategorie: dto.idCategorie,
+                    nomClient: dto.nomClient,
+                },
+            });
+            return this.mapToClient(r);
+        }
+        catch (error) {
+            if (error.code === 'P2025') {
+                throw new common_1.NotFoundException(`Réalisation avec l'ID ${idRealisation} non trouvée.`);
+            }
+            console.error("Prisma Update Error:", error);
+            throw error;
+        }
+    }
+    async remove(idRealisation) {
+        const r = await this.prisma.realisation.delete({
+            where: { idRealisation },
         });
+        return this.mapToClient(r);
+    }
+    async findAllCategories() {
+        const cats = await this.prisma.category.findMany();
+        return cats.map(c => ({
+            idCategorie: c.idCategorie,
+            nom: c.nom
+        }));
     }
 };
 exports.RealisationsService = RealisationsService;

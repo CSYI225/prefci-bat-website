@@ -10,27 +10,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JwtStrategy = void 0;
-const common_1 = require("@nestjs/common");
-const passport_1 = require("@nestjs/passport");
 const passport_jwt_1 = require("passport-jwt");
-const config_1 = require("@nestjs/config");
+const passport_1 = require("@nestjs/passport");
+const common_1 = require("@nestjs/common");
+const prisma_service_1 = require("../prisma/prisma.service");
 let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
-    configService;
-    constructor(configService) {
+    prisma;
+    constructor(prisma) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: configService.get('JWT_SECRET') || 'default-secret-key',
+            secretOrKey: process.env.JWT_SECRET || 'sup3rS3cr3t!',
         });
-        this.configService = configService;
+        this.prisma = prisma;
     }
     async validate(payload) {
-        return { id: payload.sub, email: payload.email };
+        const admin = await this.prisma.admin.findUnique({
+            where: { idAdmin: payload.sub }
+        });
+        if (!admin)
+            throw new common_1.UnauthorizedException();
+        return { userId: payload.sub, email: payload.email };
     }
 };
 exports.JwtStrategy = JwtStrategy;
 exports.JwtStrategy = JwtStrategy = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [config_1.ConfigService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], JwtStrategy);
 //# sourceMappingURL=jwt.strategy.js.map

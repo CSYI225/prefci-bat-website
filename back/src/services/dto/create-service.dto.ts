@@ -1,13 +1,12 @@
-import { IsString, IsNotEmpty, IsOptional, IsInt } from 'class-validator';
+import { IsString, IsOptional } from 'class-validator';
 
 export class CreateServiceDto {
   @IsString()
-  @IsNotEmpty()
-  title: string;
+  titre: string;
 
   @IsString()
-  @IsNotEmpty()
-  description: string;
+  @IsOptional()
+  description?: string;
 
   @IsString()
   @IsOptional()
@@ -15,9 +14,5 @@ export class CreateServiceDto {
 
   @IsString()
   @IsOptional()
-  icon?: string;
-
-  @IsInt()
-  @IsOptional()
-  order?: number;
+  details?: string;
 }

@@ -7,120 +7,118 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  name      String?
-  role      String   @default("ADMIN")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model AdminPageContent {
-  id        Int      @id @default(autoincrement())
-  pageKey   String   @unique // accueil, presentation, services, realisations, contact
-  content   Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model Page {
-  id        Int       @id @default(autoincrement())
-  name      String    @unique // Accueil, Presentation, Services, Realisations, Contact
-  slug      String    @unique
-  sections  Section[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  idPage   Int       @id @default(autoincrement()) @map("id_page")
+  nomPage  String    @db.VarChar(100) @map("nom_page")
+  slug     String    @unique @db.VarChar(100)
+  sections Section[]
+
+  @@map("pages")
 }
 
 model Section {
-  id        Int      @id @default(autoincrement())
-  type      String   // hero, about, mission, cta, etc.
-  order     Int      @default(0)
-  pageId    Int
-  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
-  content   Json?    // Structured content: { title: "...", subtitle: "...", description: "...", image: "..." }
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  idSection  Int      @id @default(autoincrement()) @map("id_section")
+  idPage     Int      @map("id_page")
+  nomSection String   @db.VarChar(100) @map("nom_section")
+  ordre      Int?     @default(0)
+  
+  page       Page     @relation(fields: [idPage], references: [idPage], onDelete: Cascade)
+  champs     Champ[]
+  blocs      Bloc[]
+
+  @@map("sections")
+}
+
+model Champ {
+  idChamp   Int      @id @default(autoincrement()) @map("id_champ")
+  idSection Int      @map("id_section")
+  nomChamp  String   @db.VarChar(100) @map("nom_champ")
+  typeChamp String   @db.VarChar(50) @map("type_champ")
+  
+  section   Section  @relation(fields: [idSection], references: [idSection], onDelete: Cascade)
+  valeurs   Valeur[]
+
+  @@map("champs")
+}
+
+model Bloc {
+  idBloc    Int      @id @default(autoincrement()) @map("id_bloc")
+  idSection Int      @map("id_section")
+  ordre     Int?     @default(0)
+  
+  section   Section  @relation(fields: [idSection], references: [idSection], onDelete: Cascade)
+  valeurs   Valeur[]
+
+  @@map("blocs")
+}
+
+model Valeur {
+  idValeur  Int      @id @default(autoincrement()) @map("id_valeur")
+  idChamp   Int      @map("id_champ")
+  idBloc    Int?     @map("id_bloc")
+  contenu   String?  @db.LongText
+  
+  champ     Champ    @relation(fields: [idChamp], references: [idChamp], onDelete: Cascade)
+  bloc      Bloc?    @relation(fields: [idBloc], references: [idBloc], onDelete: Cascade)
+
+  @@map("valeurs")
 }
 
 model Service {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String   @db.Text
-  image       String?
-  icon        String?
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  idService   Int      @id @default(autoincrement()) @map("id_service")
+  titre       String   @db.VarChar(150)
+  description String?  @db.Text
+  image       String?  @db.LongText
+  details     String?  @db.Text
+
+  @@map("services")
+}
+
+model Category {
+  idCategorie  Int           @id @default(autoincrement()) @map("id_categorie")
+  nom          String        @db.VarChar(100)
+  
+  realisations Realisation[]
+
+  @@map("categories")
 }
 
 model Realisation {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String   @db.Text
-  category    String
-  client      String?
-  project     String?
-  imgBefore   String
-  imgAfter    String?
-  featured    Boolean  @default(false)
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  idRealisation     Int       @id @default(autoincrement()) @map("id_realisation")
+  titre             String    @db.VarChar(150)
+  descriptionProjet String?   @db.Text @map("description_projet")
+  descriptionClient String?   @db.Text @map("description_client")
+  imageAvant        String?   @db.LongText @map("image_avant")
+  imageApres        String?   @db.LongText @map("image_apres")
+  idCategorie       Int?      @map("id_categorie")
+  nomClient         String?   @db.VarChar(150) @map("nom_client")
+  dateRealisation   DateTime? @db.Date @map("date_realisation")
+  
+  categorie         Category? @relation(fields: [idCategorie], references: [idCategorie], onDelete: SetNull)
+
+  @@map("realisations")
 }
 
-model Testimonial {
-  id        Int      @id @default(autoincrement())
-  name      String
-  role      String?
-  content   String   @db.Text
-  avatar    String?
-  rating    Int      @default(5)
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Admin {
+  idAdmin        Int       @id @default(autoincrement()) @map("id_admin")
+  nom            String    @db.VarChar(100)
+  email          String    @unique @db.VarChar(150)
+  motDePasseHash String    @db.Text @map("mot_de_passe_hash")
+  role           String?   @default("admin") @db.VarChar(50)
+  dateCreation   DateTime? @default(now()) @db.Timestamp(0) @map("date_creation")
+
+  @@map("admins")
 }
 
-model Partner {
-  id        Int      @id @default(autoincrement())
-  name      String?
-  logo      String
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
+model DemandeDevis {
+  idDemande      Int       @id @default(autoincrement()) @map("id_demande")
+  nomClient      String    @db.VarChar(150) @map("nom_client")
+  email          String    @db.VarChar(150)
+  telephone      String?   @db.VarChar(50)
+  serviceDemande String?   @db.VarChar(150) @map("service_demande")
+  message        String?   @db.Text
+  dateDemande    DateTime? @default(now()) @db.Timestamp(0) @map("date_demande")
+  statut         String?   @default("en_attente") @db.VarChar(50)
 
-model TeamMember {
-  id          Int      @id @default(autoincrement())
-  name        String
-  role        String
-  image       String
-  socialLinks Json?    // { linkedin: "...", instagram: "...", facebook: "...", x: "...", youtube: "..." }
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  @@map("demandes_devis")
 }
-
-model Stat {
-  id        Int      @id @default(autoincrement())
-  label     String
-  value     String
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model DevisRequest {
-  id          Int      @id @default(autoincrement())
-  name        String
-  email       String
-  phone       String?
-  message     String   @db.Text
-  serviceType String?
-  status      String   @default("NEW") // NEW, TREATED
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-

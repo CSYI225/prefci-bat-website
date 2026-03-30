@@ -22,10 +22,15 @@ let AuthController = class AuthController {
         this.authService = authService;
     }
     async login(body) {
+        console.log('--- LOGIN ATTEMPT ---');
+        console.log('Email:', body.email);
+        console.log('Password provided:', body.password ? '****' : 'MISSING');
         const user = await this.authService.validateUser(body.email, body.password);
         if (!user) {
+            console.log('RESULT: Unauthorized (Incorrect credentials)');
             throw new common_1.UnauthorizedException('Identifiants incorrects');
         }
+        console.log('RESULT: Success for user', user.email);
         return this.authService.login(user);
     }
     getProfile(req) {

@@ -15,16 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PagesController = void 0;
 const common_1 = require("@nestjs/common");
 const pages_service_1 = require("./pages.service");
-const create_page_dto_1 = require("./dto/create-page.dto");
-const update_page_dto_1 = require("./dto/update-page.dto");
-const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let PagesController = class PagesController {
     pagesService;
     constructor(pagesService) {
         this.pagesService = pagesService;
-    }
-    create(createPageDto) {
-        return this.pagesService.create(createPageDto);
     }
     findAll() {
         return this.pagesService.findAll();
@@ -32,25 +26,8 @@ let PagesController = class PagesController {
     findOne(slug) {
         return this.pagesService.findOne(slug);
     }
-    findById(id) {
-        return this.pagesService.findById(id);
-    }
-    update(id, updatePageDto) {
-        return this.pagesService.update(id, updatePageDto);
-    }
-    remove(id) {
-        return this.pagesService.remove(id);
-    }
 };
 exports.PagesController = PagesController;
-__decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_page_dto_1.CreatePageDto]),
-    __metadata("design:returntype", void 0)
-], PagesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -64,31 +41,6 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], PagesController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)('id/:id'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], PagesController.prototype, "findById", null);
-__decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, update_page_dto_1.UpdatePageDto]),
-    __metadata("design:returntype", void 0)
-], PagesController.prototype, "update", null);
-__decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], PagesController.prototype, "remove", null);
 exports.PagesController = PagesController = __decorate([
     (0, common_1.Controller)('pages'),
     __metadata("design:paramtypes", [pages_service_1.PagesService])

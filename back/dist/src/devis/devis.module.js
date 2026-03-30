@@ -10,6 +10,7 @@ exports.DevisModule = void 0;
 const common_1 = require("@nestjs/common");
 const devis_service_1 = require("./devis.service");
 const devis_controller_1 = require("./devis.controller");
+const devis_public_controller_1 = require("./devis-public.controller");
 const mail_module_1 = require("../mail/mail.module");
 let DevisModule = class DevisModule {
 };
@@ -17,7 +18,7 @@ exports.DevisModule = DevisModule;
 exports.DevisModule = DevisModule = __decorate([
     (0, common_1.Module)({
         imports: [mail_module_1.MailModule],
-        controllers: [devis_controller_1.DevisController],
+        controllers: [devis_controller_1.DevisController, devis_public_controller_1.DevisPublicController],
         providers: [devis_service_1.DevisService],
         exports: [devis_service_1.DevisService],
     })

@@ -15,34 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DevisController = void 0;
 const common_1 = require("@nestjs/common");
 const devis_service_1 = require("./devis.service");
-const create_devis_dto_1 = require("./dto/create-devis.dto");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let DevisController = class DevisController {
     devisService;
     constructor(devisService) {
         this.devisService = devisService;
     }
-    create(createDevisDto) {
-        return this.devisService.create(createDevisDto);
-    }
     findAll() {
         return this.devisService.findAll();
     }
-    updateStatus(id, status) {
-        return this.devisService.updateStatus(id, status);
-    }
-    remove(id) {
-        return this.devisService.remove(id);
+    updateStatut(id, statut) {
+        return this.devisService.updateStatut(id, statut);
     }
 };
 exports.DevisController = DevisController;
-__decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_devis_dto_1.CreateDevisDto]),
-    __metadata("design:returntype", void 0)
-], DevisController.prototype, "create", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)(),
@@ -52,23 +38,15 @@ __decorate([
 ], DevisController.prototype, "findAll", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Patch)(':id/status'),
+    (0, common_1.Patch)(':id/statut'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Body)('status')),
+    __param(1, (0, common_1.Body)('statut')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, String]),
     __metadata("design:returntype", void 0)
-], DevisController.prototype, "updateStatus", null);
-__decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], DevisController.prototype, "remove", null);
+], DevisController.prototype, "updateStatut", null);
 exports.DevisController = DevisController = __decorate([
-    (0, common_1.Controller)('devis'),
+    (0, common_1.Controller)('admin/devis'),
     __metadata("design:paramtypes", [devis_service_1.DevisService])
 ], DevisController);
 //# sourceMappingURL=devis.controller.js.map

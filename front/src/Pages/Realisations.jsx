@@ -1,16 +1,80 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { realisationsData } from '../Data/realisations.js';
+import { realisationsData as fallbackReals } from '../Data/realisations.js';
 import '../Styles/Realisations.css';
 import '../Styles/Accueil.css'; // For common CTA banner
 
 const Realisations = () => {
-    // Data moved to ../Data/realisations.js
-
+    const [realisationsData, setRealisationsData] = useState([]);
+    const [categories, setCategories] = useState(['TOUTES']);
     const [activeFilter, setActiveFilter] = useState('TOUTES');
     const [visibleCount, setVisibleCount] = useState(3);
     const [globalShowAfter, setGlobalShowAfter] = useState(false);
     const [manualStates, setManualStates] = useState({}); // { id: boolean }
+    const [banner, setBanner] = useState({ titreNoir: "NOS RÉALISATIONS", titreBleu: "RÉSULTATS VISIBLES", image: "" });
+
+    // Fetch initial API data
+    useEffect(() => {
+        // Fetch Realisations
+        fetch('http://localhost:3000/admin/realisations')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    const mapped = data.map(r => ({
+                        id: r.idRealisation,
+                        titreClient: r.nomClient || 'Client Anonyme',
+                        titreProjet: r.titre,
+                        desc: r.descriptionProjet || '',
+                        clientDesc: r.descriptionClient || '',
+                        imgBefore: r.imageAvant || '',
+                        imgAfter: r.imageApres || '',
+                        category: r.categorie?.nom || 'NON CLASSÉ'
+                    }));
+                    setRealisationsData(mapped);
+
+                    // Extract unique categories
+                    const uniqueCats = ['TOUTES', ...new Set(mapped.map(m => (m.category || 'AUTRE').trim().toUpperCase()))];
+                    setCategories(uniqueCats);
+                } else {
+                    // Inject Fallback structure matching mapped backend
+                    const fb = fallbackReals.map(f => ({
+                        id: f.id,
+                        titreClient: "Anonyme",
+                        titreProjet: f.title,
+                        desc: f.desc,
+                        clientDesc: fallbackReals[0].desc,
+                        imgBefore: f.imgBefore,
+                        imgAfter: f.imgBefore,
+                        category: f.category || "INCONNU"
+                    }));
+                    setRealisationsData(fb);
+                    setCategories(['TOUTES', 'PLOMBERIE', 'ÉTANCHÉITÉ', 'FROID ET CLIMATISATION']);
+                }
+            })
+            .catch(err => {
+                console.warn("Using default Realisations content", err);
+                const fb = fallbackReals.map(f => ({
+                    id: f.id,
+                    titreClient: "Anonyme",
+                    titreProjet: f.title,
+                    desc: f.desc,
+                    clientDesc: "Description client...",
+                    imgBefore: f.imgBefore,
+                    imgAfter: f.imgBefore,
+                    category: f.category || "INCONNU"
+                }));
+                setRealisationsData(fb);
+                setCategories(['TOUTES', 'PLOMBERIE', 'ÉTANCHÉITÉ', 'FROID ET CLIMATISATION']);
+            });
+
+        // Fetch Banner
+        fetch('http://localhost:3000/admin/pages/realisations/content')
+            .then(res => res.json())
+            .then(pageData => {
+                if (pageData && pageData.banniere) setBanner(pageData.banniere);
+            })
+            .catch(err => console.warn("Using default banner for Realisations", err));
+    }, []);
 
     // Auto-toggle interval
     useEffect(() => {
@@ -24,15 +88,14 @@ const Realisations = () => {
 
     // Scroll to project if hash is present
     useEffect(() => {
-        if (hash) {
+        if (hash && realisationsData.length > 0) {
             const projectId = hash.replace('#', '');
             const targetId = projectId.split('-')[1];
             
-            // Find project to verify it exists and set matching filter if needed
             const project = realisationsData.find(p => p.id === parseInt(targetId));
             if (project) {
-                setActiveFilter('TOUTES'); // Reset filter to make sure it's visible
-                setVisibleCount(realisationsData.length); // Show all to be sure
+                setActiveFilter('TOUTES');
+                setVisibleCount(realisationsData.length);
             }
 
             setTimeout(() => {
@@ -42,29 +105,13 @@ const Realisations = () => {
                 }
             }, 500);
         }
-    }, [hash]);
-
-    // Re-reveal elements when filter or count changes
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        const elements = document.querySelectorAll('.reveal');
-        elements.forEach((el) => observer.observe(el));
-
-        return () => observer.disconnect();
-    }, [activeFilter, visibleCount]);
+    }, [hash, realisationsData]);
 
     const filteredData = activeFilter === 'TOUTES' 
         ? realisationsData 
-        : realisationsData.filter(item => item.category === activeFilter);
+        : realisationsData.filter(item => (item.category || '').trim().toUpperCase() === activeFilter);
 
-    const displayedData = filteredData.slice(0, visibleCount);
+    const displayedData = filteredData.slice(0, Math.max(visibleCount, 3));
 
     const handleFilterChange = (filter) => {
         setActiveFilter(filter);
@@ -79,9 +126,12 @@ const Realisations = () => {
         <div className="realisations-page">
             {/* 1. Banner */}
             <div className="realisations-banniere reveal reveal-up">
+                {banner.image && (
+                    <img src={banner.image} alt="Banniere" style={{position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', zIndex: -1}} />
+                )}
                 <div className="banniere-text-box reveal reveal-up delay-200">
-                    <h2>DES INTERVENTIONS <span className="white-bg">CONCRETES,</span></h2>
-                    <h2>DES<span className="highlight-bg">RESULTATS</span>VISIBLES</h2>
+                    <h2>{banner.titreNoir}</h2>
+                    <h2><span className="highlight-bg">{banner.titreBleu}</span></h2>
                 </div>
             </div>
 
@@ -95,8 +145,8 @@ const Realisations = () => {
             </div>
 
             {/* 3. Filter Bar */}
-            <div className="filter-bar reveal reveal-up">
-                {['TOUTES', 'PLOMBERIE', 'ÉTANCHÉITÉ', 'FROID ET CLIMATISATION'].map((filter, i) => (
+            <div className="filter-bar reveal reveal-up" style={{ flexWrap: 'wrap' }}>
+                {categories.map((filter) => (
                     <button 
                         key={filter}
                         className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
@@ -109,6 +159,11 @@ const Realisations = () => {
 
             {/* 4. Realisations List */}
             <div className="realisations-list" key={activeFilter}>
+                {displayedData.length === 0 && (
+                    <div className="no-results reveal reveal-up" style={{ textAlign: 'center', padding: '40px', gridColumn: '1/-1' }}>
+                        <p>Aucune réalisation trouvée pour cette catégorie.</p>
+                    </div>
+                )}
                 {displayedData.map((item, index) => {
                     const isAfter = manualStates[item.id] !== undefined 
                         ? manualStates[item.id] 
@@ -128,7 +183,7 @@ const Realisations = () => {
                                         className={`before-img ${isAfter ? 'hidden' : 'visible'}`} 
                                     />
                                     <img 
-                                        src={item.imgAfter} 
+                                        src={item.imgAfter || item.imgBefore} 
                                         alt="Après" 
                                         className={`after-img ${isAfter ? 'visible' : 'hidden'}`} 
                                     />
@@ -148,14 +203,10 @@ const Realisations = () => {
                                 </div>
                             </div>
                             <div className="realisation-text">
-                                <h3>CLIENT : {item.client}</h3>
-                                <p>
-                                    À travers ces réalisations, découvrez comment nous avons aidé nos clients à résoudre leurs problèmes techniques efficacement. À travers ces réalisations, découvrez comment nous avons aidé nos clients à résoudre leurs problèmes techniques efficacement.
-                                </p>
-                                <h3>PROJET : {item.projet}</h3>
-                                <p>
-                                    À travers ces réalisations, découvrez comment nous avons aidé nos clients à résoudre leurs problèmes techniques efficacement. À travers ces réalisations, découvrez comment nous avons aidé nos clients à résoudre leurs problèmes techniques efficacement.
-                                </p>
+                                <h3>CLIENT : {item.titreClient}</h3>
+                                <p>{item.clientDesc || item.desc}</p>
+                                <h3>PROJET : {item.titreProjet}</h3>
+                                <p>{item.desc}</p>
                             </div>
                         </div>
                     );

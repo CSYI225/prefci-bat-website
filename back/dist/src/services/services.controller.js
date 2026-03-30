@@ -63,7 +63,7 @@ __decorate([
 ], ServicesController.prototype, "findOne", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Patch)(':id'),
+    (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -79,7 +79,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ServicesController.prototype, "remove", null);
 exports.ServicesController = ServicesController = __decorate([
-    (0, common_1.Controller)('services'),
+    (0, common_1.Controller)('admin/services'),
     __metadata("design:paramtypes", [services_service_1.ServicesService])
 ], ServicesController);
 //# sourceMappingURL=services.controller.js.map

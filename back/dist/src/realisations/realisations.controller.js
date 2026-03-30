@@ -23,6 +23,9 @@ let RealisationsController = class RealisationsController {
     constructor(realisationsService) {
         this.realisationsService = realisationsService;
     }
+    findAllCategories() {
+        return this.realisationsService.findAllCategories();
+    }
     create(createRealisationDto) {
         return this.realisationsService.create(createRealisationDto);
     }
@@ -32,8 +35,14 @@ let RealisationsController = class RealisationsController {
     findOne(id) {
         return this.realisationsService.findOne(id);
     }
-    update(id, updateRealisationDto) {
-        return this.realisationsService.update(id, updateRealisationDto);
+    async update(id, updateRealisationDto) {
+        try {
+            return await this.realisationsService.update(id, updateRealisationDto);
+        }
+        catch (error) {
+            console.error("Error in RealisationsController.update:", error);
+            throw error;
+        }
     }
     remove(id) {
         return this.realisationsService.remove(id);
@@ -41,21 +50,27 @@ let RealisationsController = class RealisationsController {
 };
 exports.RealisationsController = RealisationsController;
 __decorate([
+    (0, common_1.Get)('categories'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], RealisationsController.prototype, "findAllCategories", null);
+__decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Post)(),
+    (0, common_1.Post)('realisations'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_realisation_dto_1.CreateRealisationDto]),
     __metadata("design:returntype", void 0)
 ], RealisationsController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('realisations'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], RealisationsController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
+    (0, common_1.Get)('realisations/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -63,23 +78,23 @@ __decorate([
 ], RealisationsController.prototype, "findOne", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Patch)(':id'),
+    (0, common_1.Put)('realisations/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, update_realisation_dto_1.UpdateRealisationDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], RealisationsController.prototype, "update", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)('realisations/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], RealisationsController.prototype, "remove", null);
 exports.RealisationsController = RealisationsController = __decorate([
-    (0, common_1.Controller)('realisations'),
+    (0, common_1.Controller)('admin'),
     __metadata("design:paramtypes", [realisations_service_1.RealisationsService])
 ], RealisationsController);
 //# sourceMappingURL=realisations.controller.js.map

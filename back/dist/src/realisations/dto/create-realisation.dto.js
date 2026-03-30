@@ -12,60 +12,47 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateRealisationDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateRealisationDto {
-    title;
-    description;
-    category;
-    client;
-    project;
-    imgBefore;
-    imgAfter;
-    featured;
-    order;
+    titre;
+    descriptionProjet;
+    descriptionClient;
+    imageAvant;
+    imageApres;
+    nomClient;
+    idCategorie;
 }
 exports.CreateRealisationDto = CreateRealisationDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateRealisationDto.prototype, "title", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateRealisationDto.prototype, "description", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateRealisationDto.prototype, "category", void 0);
+], CreateRealisationDto.prototype, "titre", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateRealisationDto.prototype, "client", void 0);
+], CreateRealisationDto.prototype, "descriptionProjet", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateRealisationDto.prototype, "project", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateRealisationDto.prototype, "imgBefore", void 0);
+], CreateRealisationDto.prototype, "descriptionClient", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateRealisationDto.prototype, "imgAfter", void 0);
+], CreateRealisationDto.prototype, "imageAvant", void 0);
 __decorate([
-    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", Boolean)
-], CreateRealisationDto.prototype, "featured", void 0);
+    __metadata("design:type", String)
+], CreateRealisationDto.prototype, "imageApres", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateRealisationDto.prototype, "nomClient", void 0);
 __decorate([
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
-], CreateRealisationDto.prototype, "order", void 0);
+], CreateRealisationDto.prototype, "idCategorie", void 0);
 //# sourceMappingURL=create-realisation.dto.js.map

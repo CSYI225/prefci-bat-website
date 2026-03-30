@@ -12,61 +12,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PagesService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const admin_content_service_1 = require("../admin-content/admin-content.service");
 let PagesService = class PagesService {
     prisma;
-    constructor(prisma) {
+    adminContentService;
+    constructor(prisma, adminContentService) {
         this.prisma = prisma;
-    }
-    async create(createPageDto) {
-        return this.prisma.page.create({
-            data: createPageDto,
-        });
+        this.adminContentService = adminContentService;
     }
     async findAll() {
         return this.prisma.page.findMany({
-            orderBy: { name: 'asc' },
+            orderBy: { nomPage: 'asc' },
         });
     }
     async findOne(slug) {
-        const page = await this.prisma.page.findUnique({
-            where: { slug },
-            include: {
-                sections: {
-                    orderBy: { order: 'asc' },
-                },
-            },
-        });
-        if (!page) {
-            throw new common_1.NotFoundException(`Page avec le slug "${slug}" introuvable`);
-        }
-        return page;
-    }
-    async findById(id) {
-        const page = await this.prisma.page.findUnique({
-            where: { id },
-            include: { sections: true },
-        });
-        if (!page) {
-            throw new common_1.NotFoundException(`Page avec l'ID #${id} introuvable`);
-        }
-        return page;
-    }
-    async update(id, updatePageDto) {
-        return this.prisma.page.update({
-            where: { id },
-            data: updatePageDto,
-        });
-    }
-    async remove(id) {
-        await this.findById(id);
-        return this.prisma.page.delete({
-            where: { id },
-        });
+        return this.adminContentService.getPageContent(slug);
     }
 };
 exports.PagesService = PagesService;
 exports.PagesService = PagesService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        admin_content_service_1.AdminContentService])
 ], PagesService);
 //# sourceMappingURL=pages.service.js.map

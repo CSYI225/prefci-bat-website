@@ -230,12 +230,14 @@
 /* Pourquoi Nous */
 .pourquoi-section {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   align-content: center;
   justify-content: center;
+  padding: 80px 0;
   background-color: var(--light-color);
 }
 
@@ -264,6 +266,7 @@
   height: 100%;
 }
 
+
 .raison-text h4 {
   font-size: 1.3rem;
   color: var(--text-dark, #222);
@@ -286,17 +289,22 @@
 /* Mot du Directeur */
 .directeur-section {
   width: 100vw;
-  height: 100vh;
+  min-height: 70vh;
+  height: auto;
   display: flex;
   align-items: center;
   align-content: center;
   justify-content: center;
+  padding: 80px 0;
   background-color: rgba(31, 41, 55, 0.95);
 }
 
 .directeur-img {
-  width: 30%;
-  height: 100%;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  max-height: 450px;
+  object-fit: cover;
 }
 
 .cadre-bleu3 {

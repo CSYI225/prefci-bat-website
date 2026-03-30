@@ -10,13 +10,15 @@ exports.PagesModule = void 0;
 const common_1 = require("@nestjs/common");
 const pages_service_1 = require("./pages.service");
 const pages_controller_1 = require("./pages.controller");
+const admin_content_module_1 = require("../admin-content/admin-content.module");
 let PagesModule = class PagesModule {
 };
 exports.PagesModule = PagesModule;
 exports.PagesModule = PagesModule = __decorate([
     (0, common_1.Module)({
+        imports: [admin_content_module_1.AdminContentModule],
+        controllers: [pages_controller_1.PagesController],
         providers: [pages_service_1.PagesService],
-        controllers: [pages_controller_1.PagesController]
     })
 ], PagesModule);
 //# sourceMappingURL=pages.module.js.map

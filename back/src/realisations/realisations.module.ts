@@ -3,9 +3,11 @@ import { RealisationsService } from './realisations.service';
 import { RealisationsController } from './realisations.controller';
 import { PrismaModule } from '../prisma/prisma.module';
 
+import { RealisationsPublicController } from './realisations-public.controller';
+
 @Module({
   imports: [PrismaModule],
-  controllers: [RealisationsController],
+  controllers: [RealisationsController, RealisationsPublicController],
   providers: [RealisationsService],
 })
 export class RealisationsModule {}

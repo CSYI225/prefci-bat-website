@@ -30,8 +30,8 @@
 }
 
 .contact-banniere h2 span.light {
-  background-color: #fff;
-  color: var(--primary-color, rgba(76, 201, 240, 0.85));
+  background-color: transparent;
+  color: inherit;
 }
 
 /* Main Section */

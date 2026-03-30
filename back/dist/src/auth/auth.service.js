@@ -12,31 +12,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
-const users_service_1 = require("../users/users.service");
+const prisma_service_1 = require("../prisma/prisma.service");
 const bcrypt = require("bcryptjs");
 let AuthService = class AuthService {
-    usersService;
+    prisma;
     jwtService;
-    constructor(usersService, jwtService) {
-        this.usersService = usersService;
+    constructor(prisma, jwtService) {
+        this.prisma = prisma;
         this.jwtService = jwtService;
     }
     async validateUser(email, pass) {
-        const user = await this.usersService.findByEmail(email);
-        if (user && (await bcrypt.compare(pass, user.password))) {
-            const { password, ...result } = user;
+        const admin = await this.prisma.admin.findUnique({
+            where: { email },
+        });
+        if (admin && (await bcrypt.compare(pass, admin.motDePasseHash))) {
+            const { motDePasseHash, ...result } = admin;
             return result;
         }
         return null;
     }
     async login(user) {
-        const payload = { email: user.email, sub: user.id };
+        const payload = { email: user.email, sub: user.idAdmin };
         return {
             access_token: this.jwtService.sign(payload),
             user: {
-                id: user.id,
+                id: user.idAdmin,
                 email: user.email,
-                name: user.name,
+                name: user.nom,
             },
         };
     }
@@ -44,7 +46,7 @@ let AuthService = class AuthService {
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [users_service_1.UsersService,
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
         jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

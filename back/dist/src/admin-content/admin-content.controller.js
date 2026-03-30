@@ -21,33 +21,33 @@ let AdminContentController = class AdminContentController {
     constructor(adminContentService) {
         this.adminContentService = adminContentService;
     }
-    get(pageKey) {
-        return this.adminContentService.getByPageKey(pageKey);
+    get(slug) {
+        return this.adminContentService.getPageContent(slug);
     }
-    upsert(pageKey, body) {
-        return this.adminContentService.upsert(pageKey, body?.content ?? {});
+    upsertSection(slug, sectionKey, body) {
+        return this.adminContentService.patchSection(slug, sectionKey, body);
     }
 };
 exports.AdminContentController = AdminContentController;
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)(':pageKey'),
-    __param(0, (0, common_1.Param)('pageKey')),
+    (0, common_1.Get)(':slug/content'),
+    __param(0, (0, common_1.Param)('slug')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AdminContentController.prototype, "get", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Patch)(':pageKey'),
-    __param(0, (0, common_1.Param)('pageKey')),
-    __param(1, (0, common_1.Body)()),
+    (0, common_1.Patch)(':slug/:sectionKey'),
+    __param(0, (0, common_1.Param)('slug')),
+    __param(1, (0, common_1.Param)('sectionKey')),
+    __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, String, Object]),
     __metadata("design:returntype", void 0)
-], AdminContentController.prototype, "upsert", null);
+], AdminContentController.prototype, "upsertSection", null);
 exports.AdminContentController = AdminContentController = __decorate([
-    (0, common_1.Controller)('admin-content'),
+    (0, common_1.Controller)('admin/pages'),
     __metadata("design:paramtypes", [admin_content_service_1.AdminContentService])
 ], AdminContentController);
 //# sourceMappingURL=admin-content.controller.js.map

@@ -15,26 +15,26 @@ export class ServicesService {
 
   findAll() {
     return this.prisma.service.findMany({
-      orderBy: { order: 'asc' },
+      orderBy: { idService: 'asc' },
     });
   }
 
-  findOne(id: number) {
+  findOne(idService: number) {
     return this.prisma.service.findUnique({
-      where: { id },
+      where: { idService },
     });
   }
 
-  update(id: number, updateServiceDto: UpdateServiceDto) {
+  update(idService: number, updateServiceDto: UpdateServiceDto) {
     return this.prisma.service.update({
-      where: { id },
+      where: { idService },
       data: updateServiceDto,
     });
   }
 
-  remove(id: number) {
+  remove(idService: number) {
     return this.prisma.service.delete({
-      where: { id },
+      where: { idService },
     });
   }
 }

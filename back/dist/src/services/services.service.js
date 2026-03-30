@@ -24,23 +24,23 @@ let ServicesService = class ServicesService {
     }
     findAll() {
         return this.prisma.service.findMany({
-            orderBy: { order: 'asc' },
+            orderBy: { idService: 'asc' },
         });
     }
-    findOne(id) {
+    findOne(idService) {
         return this.prisma.service.findUnique({
-            where: { id },
+            where: { idService },
         });
     }
-    update(id, updateServiceDto) {
+    update(idService, updateServiceDto) {
         return this.prisma.service.update({
-            where: { id },
+            where: { idService },
             data: updateServiceDto,
         });
     }
-    remove(id) {
+    remove(idService) {
         return this.prisma.service.delete({
-            where: { id },
+            where: { idService },
         });
     }
 };

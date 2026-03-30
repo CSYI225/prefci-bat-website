@@ -12,21 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateServiceDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateServiceDto {
-    title;
+    titre;
     description;
     image;
-    icon;
-    order;
+    details;
 }
 exports.CreateServiceDto = CreateServiceDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateServiceDto.prototype, "title", void 0);
+], CreateServiceDto.prototype, "titre", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateServiceDto.prototype, "description", void 0);
 __decorate([
@@ -38,10 +36,5 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateServiceDto.prototype, "icon", void 0);
-__decorate([
-    (0, class_validator_1.IsInt)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", Number)
-], CreateServiceDto.prototype, "order", void 0);
+], CreateServiceDto.prototype, "details", void 0);
 //# sourceMappingURL=create-service.dto.js.map

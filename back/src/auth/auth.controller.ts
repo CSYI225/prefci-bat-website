@@ -11,10 +11,18 @@ export class AuthController {
    */
   @Post('login')
   async login(@Body() body: any) {
+    console.log('--- LOGIN ATTEMPT ---');
+    console.log('Email:', body.email);
+    console.log('Password provided:', body.password ? '****' : 'MISSING');
+    
     const user = await this.authService.validateUser(body.email, body.password);
+    
     if (!user) {
+      console.log('RESULT: Unauthorized (Incorrect credentials)');
       throw new UnauthorizedException('Identifiants incorrects');
     }
+    
+    console.log('RESULT: Success for user', user.email);
     return this.authService.login(user);
   }
 

@@ -1,57 +1,23 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-  ParseIntPipe,
-} from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { DevisService } from './devis.service';
-import { CreateDevisDto } from './dto/create-devis.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
-@Controller('devis')
+@Controller('admin/devis')
 export class DevisController {
   constructor(private readonly devisService: DevisService) {}
 
-  /**
-   * Soumettre un devis (Public)
-   */
-  @Post()
-  create(@Body() createDevisDto: CreateDevisDto) {
-    return this.devisService.create(createDevisDto);
-  }
-
-  /**
-   * Liste des devis (Admin)
-   */
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.devisService.findAll();
   }
 
-  /**
-   * Changer le statut (Admin)
-   */
   @UseGuards(JwtAuthGuard)
-  @Patch(':id/status')
-  updateStatus(
+  @Patch(':id/statut')
+  updateStatut(
     @Param('id', ParseIntPipe) id: number,
-    @Body('status') status: string,
+    @Body('statut') statut: string
   ) {
-    return this.devisService.updateStatus(id, status);
-  }
-
-  /**
-   * Supprimer un devis (Admin)
-   */
-  @UseGuards(JwtAuthGuard)
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.devisService.remove(id);
+    return this.devisService.updateStatut(id, statut);
   }
 }

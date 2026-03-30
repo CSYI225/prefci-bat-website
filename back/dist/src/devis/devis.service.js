@@ -12,48 +12,55 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DevisService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-const mail_service_1 = require("../mail/mail.service");
 let DevisService = class DevisService {
     prisma;
-    mailService;
-    constructor(prisma, mailService) {
+    constructor(prisma) {
         this.prisma = prisma;
-        this.mailService = mailService;
     }
-    async create(createDevisDto) {
-        const devis = await this.prisma.devisRequest.create({
-            data: createDevisDto,
-        });
-        try {
-            await this.mailService.sendAdminNotification(devis);
-            await this.mailService.sendClientConfirmation(devis);
-        }
-        catch (error) {
-            console.error('Erreur lors de l\'envoi des emails:', error);
-        }
-        return devis;
+    mapToClient(d) {
+        if (!d)
+            return null;
+        return {
+            id_demande: d.idDemande,
+            nom_client: d.nomClient,
+            email: d.email,
+            telephone: d.telephone,
+            service_demande: d.serviceDemande,
+            message: d.message,
+            date_demande: d.dateDemande,
+            statut: d.statut
+        };
     }
     async findAll() {
-        return this.prisma.devisRequest.findMany({
-            orderBy: { createdAt: 'desc' },
+        const devisList = await this.prisma.demandeDevis.findMany({
+            orderBy: { idDemande: 'desc' },
         });
+        return devisList.map(d => this.mapToClient(d));
     }
-    async updateStatus(id, status) {
-        return this.prisma.devisRequest.update({
-            where: { id },
-            data: { status },
+    async create(data) {
+        const created = await this.prisma.demandeDevis.create({
+            data: {
+                nomClient: `${data.nom || ''} ${data.prenom || ''}`.trim(),
+                email: data.email,
+                telephone: data.telephone,
+                serviceDemande: data.service,
+                message: data.message,
+                statut: 'en_attente'
+            }
         });
+        return this.mapToClient(created);
     }
-    async remove(id) {
-        return this.prisma.devisRequest.delete({
-            where: { id },
+    async updateStatut(idDemande, statut) {
+        const updated = await this.prisma.demandeDevis.update({
+            where: { idDemande },
+            data: { statut },
         });
+        return this.mapToClient(updated);
     }
 };
 exports.DevisService = DevisService;
 exports.DevisService = DevisService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
-        mail_service_1.MailService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], DevisService);
 //# sourceMappingURL=devis.service.js.map

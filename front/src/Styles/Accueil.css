@@ -278,24 +278,27 @@
   width: max-content;
 }
 
-.gallery-item.odd-item-offset {
-  margin-bottom: 25px;
-}
-
 .gallery-item {
   flex: 0 0 220px;
-  width: 19%;
-  height: 100%;
+  width: 220px;
+  height: 300px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #333;
+}
+
+.gallery-item.odd-item-offset {
+  height: 340px;
+  align-self: flex-end;
 }
 
 .gallery-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .gallery-overlay {

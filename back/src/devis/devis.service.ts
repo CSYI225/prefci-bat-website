@@ -1,59 +1,50 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { MailService } from '../mail/mail.service';
-import { CreateDevisDto } from './dto/create-devis.dto';
 
 @Injectable()
 export class DevisService {
-  constructor(
-    private prisma: PrismaService,
-    private mailService: MailService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
-  /**
-   * Crée une demande de devis et envoie les emails
-   */
-  async create(createDevisDto: CreateDevisDto) {
-    const devis = await this.prisma.devisRequest.create({
-      data: createDevisDto,
-    });
-
-    // Envoi des notifications (on ne bloque pas la réponse pour l'envoi d'email)
-    try {
-      await this.mailService.sendAdminNotification(devis);
-      await this.mailService.sendClientConfirmation(devis);
-    } catch (error) {
-      console.error('Erreur lors de l\'envoi des emails:', error);
-    }
-
-    return devis;
+  private mapToClient(d: any) {
+    if(!d) return null;
+    return {
+      id_demande: d.idDemande,
+      nom_client: d.nomClient,
+      email: d.email,
+      telephone: d.telephone,
+      service_demande: d.serviceDemande,
+      message: d.message,
+      date_demande: d.dateDemande,
+      statut: d.statut
+    };
   }
 
-  /**
-   * Liste toutes les demandes (Admin)
-   */
   async findAll() {
-    return this.prisma.devisRequest.findMany({
-      orderBy: { createdAt: 'desc' },
+    const devisList = await this.prisma.demandeDevis.findMany({
+      orderBy: { idDemande: 'desc' },
     });
+    return devisList.map(d => this.mapToClient(d));
   }
 
-  /**
-   * Met à jour le statut d'une demande
-   */
-  async updateStatus(id: number, status: string) {
-    return this.prisma.devisRequest.update({
-      where: { id },
-      data: { status },
+  async create(data: any) {
+    const created = await this.prisma.demandeDevis.create({
+      data: {
+        nomClient: `${data.nom || ''} ${data.prenom || ''}`.trim(),
+        email: data.email,
+        telephone: data.telephone,
+        serviceDemande: data.service,
+        message: data.message,
+        statut: 'en_attente'
+      }
     });
+    return this.mapToClient(created);
   }
 
-  /**
-   * Supprime une demande
-   */
-  async remove(id: number) {
-    return this.prisma.devisRequest.delete({
-      where: { id },
+  async updateStatut(idDemande: number, statut: string) {
+    const updated = await this.prisma.demandeDevis.update({
+      where: { idDemande },
+      data: { statut },
     });
+    return this.mapToClient(updated);
   }
 }

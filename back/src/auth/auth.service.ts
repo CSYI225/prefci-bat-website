@@ -1,38 +1,34 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
+import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
+    private prisma: PrismaService,
     private jwtService: JwtService,
   ) {}
 
-  /**
-   * Valide les identifiants de l'utilisateur
-   */
   async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.usersService.findByEmail(email);
-    if (user && (await bcrypt.compare(pass, user.password))) {
-      const { password, ...result } = user;
+    const admin = await this.prisma.admin.findUnique({
+      where: { email },
+    });
+    if (admin && (await bcrypt.compare(pass, admin.motDePasseHash))) {
+      const { motDePasseHash, ...result } = admin;
       return result;
     }
     return null;
   }
 
-  /**
-   * Génère un token JWT après connexion réussie
-   */
   async login(user: any) {
-    const payload = { email: user.email, sub: user.id };
+    const payload = { email: user.email, sub: user.idAdmin };
     return {
       access_token: this.jwtService.sign(payload),
       user: {
-        id: user.id,
+        id: user.idAdmin,
         email: user.email,
-        name: user.name,
+        name: user.nom,
       },
     };
   }

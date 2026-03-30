@@ -2,22 +2,22 @@ import { Controller, Get, Param, Patch, Body, UseGuards } from '@nestjs/common';
 import { AdminContentService } from './admin-content.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
-@Controller('admin-content')
+@Controller('admin/pages')
 export class AdminContentController {
   constructor(private readonly adminContentService: AdminContentService) {}
 
-  // Lecture (admin)
-  @UseGuards(JwtAuthGuard)
-  @Get(':pageKey')
-  get(@Param('pageKey') pageKey: string) {
-    return this.adminContentService.getByPageKey(pageKey);
+  @Get(':slug/content')
+  get(@Param('slug') slug: string) {
+    return this.adminContentService.getPageContent(slug);
   }
 
-  // Ecriture (admin)
   @UseGuards(JwtAuthGuard)
-  @Patch(':pageKey')
-  upsert(@Param('pageKey') pageKey: string, @Body() body: any) {
-    return this.adminContentService.upsert(pageKey, body?.content ?? {});
+  @Patch(':slug/:sectionKey')
+  upsertSection(
+    @Param('slug') slug: string,
+    @Param('sectionKey') sectionKey: string,
+    @Body() body: any
+  ) {
+    return this.adminContentService.patchSection(slug, sectionKey, body);
   }
 }
-
