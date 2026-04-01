@@ -262,7 +262,10 @@ const Presentation = () => {
             {/* 1. Hero Content */}
             <div className="presentation-banniere reveal reveal-up !h-[60vh] md:!h-[70vh]">
                 {data.banniere.image && (
-                    <img src={data.banniere.image} alt="Banniere" style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', zIndex: -1 }} />
+                    <>
+                        <img src={data.banniere.image} alt="Banniere" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: -2 }} />
+                        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: -1 }}></div>
+                    </>
                 )}
                 <div className="banniere-text-box reveal reveal-up delay-200 !px-4 md:!px-8" style={{ padding: '2rem', borderRadius: '10px' }}>
                     <h2 className="!text-[2.2rem] md:!text-[3.5rem] text-center">{data.banniere.titreNoir || 'NOS EQUIPES AUX SERVICES'}</h2>

@@ -44,13 +44,13 @@ const Hero = () => {
 
           {/* Mobile CTA Button inside Menu */}
           <div className="header-cta md:hidden">
-            <NavLink to="/Contact" onClick={() => setMenuOpen(false)} className="btn btn-white !text-[#4CC9F0] !bg-white">Demander un devis</NavLink>
+            <NavLink to="/Contact#contact-form" onClick={() => setMenuOpen(false)} className="btn btn-white !text-[#4CC9F0] !bg-white">Demander un devis</NavLink>
           </div>
         </nav>
 
         {/* Desktop CTA Button */}
         <div className="header-cta hidden md:block">
-          <NavLink to="/Contact" className="btn btn-white">Demander un devis</NavLink>
+          <NavLink to="/Contact#contact-form" className="btn btn-white">Demander un devis</NavLink>
         </div>
       </header>
     </>

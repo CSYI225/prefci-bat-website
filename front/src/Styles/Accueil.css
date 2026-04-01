@@ -297,8 +297,8 @@
 }
 
 .gallery-item {
-  flex: 0 0 var(--gallery-item-width, 220px);
-  width: var(--gallery-item-width, 220px);
+  flex: 0 0 var(--gallery-item-width, 250px);
+  width: var(--gallery-item-width, 250px);
   height: 300px;
   position: relative;
   overflow: hidden;

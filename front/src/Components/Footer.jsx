@@ -5,6 +5,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaClock } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { BsFacebook } from "react-icons/bs";
 const Footer = () => {
     return (
         <footer className="footer-section !px-6 md:!px-10 lg:!px-[100px] !py-[60px] md:!py-[40px]">
@@ -15,16 +16,16 @@ const Footer = () => {
                     <p>
                         PREFCI-BAT SARL est votre partenaire de confiance en Côte d'Ivoire pour tous vos travaux de plomberie, étanchéité et climatisation. Notre expertise et notre réactivité font la différence sur vos chantiers.
                     </p>
-                    <div className="footer-socials">
-                        {['LinkedIn', 'Facebook', 'Twitter', 'Instagram'].map((social, i) => (
-                            <a
-                                href="#"
-                                aria-label={social}
-                                key={i}
-                            >
-                                {social === 'LinkedIn' ? 'in' : social[0].toLowerCase()}
-                            </a>
-                        ))}
+                    <div className="contact-socials">
+                        <a
+                            href="https://www.facebook.com/share/14YjGZycagh/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Facebook"
+                            style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', borderRadius: '50%', background: 'var(--bg-white)', color: 'var(--primary-color)', textDecoration: 'none', fontSize: '18px' }}
+                        >
+                            <BsFacebook />
+                        </a>
                     </div>
                 </div>
 

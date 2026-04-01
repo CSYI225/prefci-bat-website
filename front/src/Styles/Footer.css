@@ -80,14 +80,14 @@
 }
 
 .footer-socials a {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid #444;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--text-dark, #222);
+  color: var(--text-dark, #222);
   transition: all 0.3s;
 }
 

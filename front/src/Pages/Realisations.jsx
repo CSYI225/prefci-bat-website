@@ -119,7 +119,10 @@ const Realisations = () => {
             {/* 1. Banner */}
             <div className="realisations-banniere reveal reveal-up !h-[60vh] md:!h-[70vh]">
                 {banner.image && (
-                    <img src={banner.image} alt="Banniere" style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', zIndex: -1 }} />
+                    <>
+                        <img src={banner.image} alt="Banniere" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: -2 }} />
+                        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: -1 }}></div>
+                    </>
                 )}
                 <div className="banniere-text-box reveal reveal-up delay-200 !px-4 md:!px-8 text-center mt-20 md:mt-0">
                     <h2 className="!text-[2rem] md:!text-[3.5rem]">{banner.titreNoir}</h2>

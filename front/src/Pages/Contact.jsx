@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../Styles/Contact.css';
+import { BsFacebook } from "react-icons/bs";
 
 const Contact = () => {
     const [data, setData] = useState({
@@ -9,16 +11,26 @@ const Contact = () => {
             image: ""
         },
         infos: [
-            { id: 1, titre: "Adresse", contenu: "10 BP 2486 Abidjan 10, Koumassi\nSicogi 1 à 100m de l'hôpital général\net 200m de Camp commando" },
-            { id: 2, titre: "Contact", contenu: "Email: prefcibat@gmail.com\nTél: +225 07 58 31 40 19 / 05 46 56 85 24\nWhatsapp: +225 07 58 31 40 19" },
+            { id: 1, titre: "Adresse", contenu: "10 BP 2486 Abidjan 10, Koumassi\nà 600m du 36e Arrondissement" },
+            { id: 2, titre: "Contact", contenu: "Email: prefcibat@gmail.com\nTél: +225 07 58 31 40 19 / \n+225 05 46 56 85 24\nWhatsapp: +225 07 58 31 40 19" },
             { id: 3, titre: "Horaire", contenu: "Lundi-Samedi: 08h-18h" },
-            { id: 4, titre: "Suivez-nous", contenu: "LinkedIn | Facebook | Twitter | Instagram" }
+            { id: 4, titre: "Suivez-nous Facebook", contenu: "<BsFacebook />" }
         ],
         mapCoordinates: "5.297389,-3.953833"
     });
 
     const [form, setForm] = useState({ nom: '', prenom: '', email: '', telephone: '', service: '', message: '', rgpd: false });
     const [status, setStatus] = useState(null); // null | 'sending' | 'success' | 'error'
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.hash === '#contact-form') {
+            const el = document.getElementById('contact-form');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, [location]);
 
     useEffect(() => {
         fetch('http://localhost:3000/pages/contact')
@@ -63,7 +75,10 @@ const Contact = () => {
             {/* 1. Hero Content */}
             <div className="contact-banniere reveal reveal-up !h-[60vh] md:!h-[70vh]">
                 {data.banniere.image && (
-                    <img src={data.banniere.image} alt="Banniere" style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', zIndex: -1 }} />
+                    <>
+                        <img src={data.banniere.image} alt="Banniere" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: -2 }} />
+                        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: -1 }}></div>
+                    </>
                 )}
                 <div className="banniere-text-box reveal reveal-up delay-200 !px-4 md:!px-8 text-center mt-20 md:mt-0" style={{ padding: '2rem', borderRadius: '10px' }}>
                     <h2 className="!text-[2rem] md:!text-[3.5rem]"><span className="light" style={{ color: data.banniere.image ? '#fff' : 'inherit' }}>{data.banniere.titreNoir}</span></h2>
@@ -78,17 +93,16 @@ const Contact = () => {
                         <div className="contact-info-block" key={info.id || i}>
                             <h3>{info.titre}</h3>
                             {info.titre?.toLowerCase().includes('suivez') ? (
-                                <div className="contact-social">
-                                    {['LinkedIn', 'Facebook', 'Twitter', 'Instagram'].map((social, j) => (
-                                        <a
-                                            href="#"
-                                            aria-label={social}
-                                            key={j}
-                                            style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', borderRadius: '50%', background: 'var(--blue-pref)', color: 'white', textDecoration: 'none' }}
-                                        >
-                                            {social[0].toLowerCase()}
-                                        </a>
-                                    ))}
+                                <div className="contact-social" style={{ marginTop: '10px' }}>
+                                    <a
+                                        href="https://www.facebook.com/share/14YjGZycagh/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label="Facebook"
+                                        style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', borderRadius: '50%', background: 'var(--blue-pref)', color: 'white', textDecoration: 'none', fontSize: '20px' }}
+                                    >
+                                        <BsFacebook />
+                                    </a>
                                 </div>
                             ) : (
                                 formatInfos(info.contenu || '')
@@ -97,7 +111,7 @@ const Contact = () => {
                     ))}
                 </div>
 
-                <div className="contact-form-container reveal reveal-right !w-full md:!w-[65%] !pl-0 md:!pl-[60px]">
+                <div id="contact-form" className="contact-form-container reveal reveal-right !w-full md:!w-[65%] !pl-0 md:!pl-[60px]">
                     {status === 'success' ? (
                         <div style={{ padding: '40px', textAlign: 'center' }}>
                             <div style={{ fontSize: '3rem', color: 'var(--blue-pref)', marginBottom: '15px' }}>✓</div>

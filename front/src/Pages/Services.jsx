@@ -4,6 +4,7 @@ import '../Styles/Accueil.css'; // For common CTA banner
 import ServicesImg from '../Images/services.jpg';
 import BanniereImg from '../Images/BanniereAccueil.png';
 import ContactImg from '../Images/contact.png';
+import { NavLink } from 'react-router-dom';
 
 const Services = () => {
     const defaultServices = [
@@ -92,13 +93,16 @@ const Services = () => {
     return (
         <div className="services-page">
             {/* 1. Banner */}
-            <div className="services-banniere reveal reveal-up">
+            <div className="services-banniere reveal reveal-up !h-[60vh] md:!h-[70vh]">
                 {banner.image && (
-                    <img src={banner.image} alt="Banniere" style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', zIndex: -1 }} />
+                    <>
+                        <img src={banner.image} alt="Banniere" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: -2 }} />
+                        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: -1 }}></div>
+                    </>
                 )}
-                <div className="banniere-text-box reveal reveal-up delay-200">
-                    <h2>{banner.titreNoir}</h2>
-                    <h2><span className="highlight-bg">{banner.titreBleu}</span></h2>
+                <div className="banniere-text-box reveal reveal-up delay-200 !px-4 md:!px-8" style={{ padding: '2rem', borderRadius: '10px' }}>
+                    <h2 className="!text-[2.2rem] md:!text-[3.5rem] text-center">{banner.titreNoir}</h2>
+                    <h2 className="!text-[2.2rem] md:!text-[3.5rem] text-center mt-2 md:mt-0"><span className="highlight-bg">{banner.titreBleu}</span></h2>
                 </div>
             </div>
 
@@ -128,12 +132,12 @@ const Services = () => {
                 })}
             </section>
 
-            {/* 3. CTA Section */}
-            <section className="cta-banner">
-                <div className="cta-content reveal reveal-up">
-                    <h2>BESOIN D'UNE INTERVENTION <span>RAPIDE ?</span></h2>
-                    <p>Contactez-nous aujourd'hui pour être mis en relation avec nos experts.</p>
-                    <button className="btn btn-white cta-btn">CONTACTEZ-NOUS</button>
+            {/* 5. CTA Section */}
+            <section className="cta-banner !h-auto md:!h-[50vh] !py-20 md:!py-0 !mb-10 md:!mb-[100px]">
+                <div className="cta-content flex-col items-center justify-center reveal reveal-up !w-[90vw] md:!w-[70vw] !h-auto md:!h-full !py-12 md:!py-0 md:rounded-none">
+                    <h2 className="!text-[1.8rem] md:!text-[2.5rem] px-4 text-center">BESOIN D'UNE INTERVENTION <br className="md:hidden" /><span>RAPIDE ?</span></h2>
+                    <p className="!text-[1rem] md:!text-[1.2rem] px-4 text-center">Contactez-nous aujourd'hui pour être mis en relation avec nos experts.</p>
+                    <NavLink to="/Contact" className="btn btn-white cta-btn">CONTACTEZ-NOUS</NavLink>
                 </div>
             </section>
         </div>
