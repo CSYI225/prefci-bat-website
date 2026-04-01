@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --primary: #2fa8e0;
   --primary-dark: #1b83b2;
@@ -222,10 +226,50 @@ body {
 @media (max-width: 900px) {
   .admin-layout {
     grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
   }
 
   .sidebar {
-    z-index: 20;
+    height: 84px; /* Explicit height for consistency */
+    position: sticky;
+    top: 0;
+    padding: 0 20px;
+    z-index: 100;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+  }
+
+  .sidebar::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome/Safari */
+  }
+
+  .sidebar h2 {
+    display: none;
+  }
+
+  .menu-item {
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    padding: 8px 12px;
+  }
+
+  .content {
+    padding: 20px;
+    height: auto;
+    overflow-y: visible;
+  }
+
+  .field-input-wrap {
+    grid-template-columns: 1fr;
+    gap: 15px;
   }
 }
 

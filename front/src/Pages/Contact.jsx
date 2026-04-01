@@ -3,10 +3,10 @@ import '../Styles/Contact.css';
 
 const Contact = () => {
     const [data, setData] = useState({
-        banniere: { 
-            titreNoir: "BESOIN D'UNE INTERVENTION ?", 
-            titreBleu: "CONTACTEZ-NOUS DÈS MAINTENANT", 
-            image: "" 
+        banniere: {
+            titreNoir: "BESOIN D'UNE INTERVENTION ?",
+            titreBleu: "CONTACTEZ-NOUS DÈS MAINTENANT",
+            image: ""
         },
         infos: [
             { id: 1, titre: "Adresse", contenu: "10 BP 2486 Abidjan 10, Koumassi\nSicogi 1 à 100m de l'hôpital général\net 200m de Camp commando" },
@@ -14,7 +14,7 @@ const Contact = () => {
             { id: 3, titre: "Horaire", contenu: "Lundi-Samedi: 08h-18h" },
             { id: 4, titre: "Suivez-nous", contenu: "LinkedIn | Facebook | Twitter | Instagram" }
         ],
-        mapCoordinates: "5.318854,-3.957688"
+        mapCoordinates: "5.297389,-3.953833"
     });
 
     const [form, setForm] = useState({ nom: '', prenom: '', email: '', telephone: '', service: '', message: '', rgpd: false });
@@ -61,29 +61,29 @@ const Contact = () => {
     return (
         <div className="contact-page">
             {/* 1. Hero Content */}
-            <div className="contact-banniere reveal reveal-up">
+            <div className="contact-banniere reveal reveal-up !h-[60vh] md:!h-[70vh]">
                 {data.banniere.image && (
-                    <img src={data.banniere.image} alt="Banniere" style={{position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', zIndex: -1}} />
+                    <img src={data.banniere.image} alt="Banniere" style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', zIndex: -1 }} />
                 )}
-                <div className="banniere-text-box reveal reveal-up delay-200" style={{padding: '2rem', borderRadius: '10px'}}>
-                    <h2><span className="light" style={{color: data.banniere.image ? '#fff' : 'inherit'}}>{data.banniere.titreNoir}</span></h2>
-                    <h2><span style={{color: 'var(--blue-pref)'}}>{data.banniere.titreBleu?.split(' ')[0]}</span> {data.banniere.titreBleu?.split(' ').slice(1).join(' ')}</h2>
+                <div className="banniere-text-box reveal reveal-up delay-200 !px-4 md:!px-8 text-center mt-20 md:mt-0" style={{ padding: '2rem', borderRadius: '10px' }}>
+                    <h2 className="!text-[2rem] md:!text-[3.5rem]"><span className="light" style={{ color: data.banniere.image ? '#fff' : 'inherit' }}>{data.banniere.titreNoir}</span></h2>
+                    <h2 className="!text-[2rem] md:!text-[3.5rem] mt-2 md:mt-0"><span style={{ color: 'var(--blue-pref)' }}>{data.banniere.titreBleu?.split(' ')[0]}</span> {data.banniere.titreBleu?.split(' ').slice(1).join(' ')}</h2>
                 </div>
             </div>
 
             {/* 2. Contact Main Content */}
-            <div className="contact-content">
-                <div className="contact-info reveal reveal-left">
+            <div className="contact-content !flex-col md:!flex-row !w-[90vw] md:!w-[80vw] mx-auto !py-[60px] md:!py-[100px] gap-10 md:gap-0">
+                <div className="contact-info reveal reveal-left !w-full md:!w-[35%] !pr-0 md:!pr-[40px] border-none md:border-r border-gray-300">
                     {data.infos.map((info, i) => (
                         <div className="contact-info-block" key={info.id || i}>
                             <h3>{info.titre}</h3>
                             {info.titre?.toLowerCase().includes('suivez') ? (
                                 <div className="contact-social">
                                     {['LinkedIn', 'Facebook', 'Twitter', 'Instagram'].map((social, j) => (
-                                        <a 
-                                            href="#" 
-                                            aria-label={social} 
-                                            key={j} 
+                                        <a
+                                            href="#"
+                                            aria-label={social}
+                                            key={j}
                                             style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', borderRadius: '50%', background: 'var(--blue-pref)', color: 'white', textDecoration: 'none' }}
                                         >
                                             {social[0].toLowerCase()}
@@ -97,40 +97,40 @@ const Contact = () => {
                     ))}
                 </div>
 
-                <div className="contact-form-container reveal reveal-right">
+                <div className="contact-form-container reveal reveal-right !w-full md:!w-[65%] !pl-0 md:!pl-[60px]">
                     {status === 'success' ? (
-                        <div style={{padding: '40px', textAlign: 'center'}}>
-                            <div style={{fontSize: '3rem', color: 'var(--blue-pref)', marginBottom: '15px'}}>✓</div>
-                            <h3 style={{marginBottom: '10px'}}>Demande envoyée !</h3>
-                            <p style={{color: '#666'}}>Notre équipe vous contactera dans les plus brefs délais.</p>
-                            <button className="submit-btn" style={{marginTop: '20px'}} onClick={resetForm}>Nouvelle demande</button>
+                        <div style={{ padding: '40px', textAlign: 'center' }}>
+                            <div style={{ fontSize: '3rem', color: 'var(--blue-pref)', marginBottom: '15px' }}>✓</div>
+                            <h3 style={{ marginBottom: '10px' }}>Demande envoyée !</h3>
+                            <p style={{ color: '#666' }}>Notre équipe vous contactera dans les plus brefs délais.</p>
+                            <button className="submit-btn" style={{ marginTop: '20px' }} onClick={resetForm}>Nouvelle demande</button>
                         </div>
                     ) : (
                         <form className="contact-form" onSubmit={handleSubmit}>
-                            <div className="form-row">
-                                <input type="text" placeholder="Nom" required value={form.nom} onChange={e => setForm(p => ({...p, nom: e.target.value}))} />
-                                <input type="text" placeholder="Prénoms" required value={form.prenom} onChange={e => setForm(p => ({...p, prenom: e.target.value}))} />
+                            <div className="form-row !flex-col md:!flex-row gap-4 md:gap-4 mb-4 md:mb-0">
+                                <input type="text" placeholder="Nom" required value={form.nom} onChange={e => setForm(p => ({ ...p, nom: e.target.value }))} className="!mb-0 md:!mb-[20px] w-full" />
+                                <input type="text" placeholder="Prénoms" required value={form.prenom} onChange={e => setForm(p => ({ ...p, prenom: e.target.value }))} className="w-full" />
                             </div>
-                            <div className="form-row">
-                                <input type="email" placeholder="Email" required value={form.email} onChange={e => setForm(p => ({...p, email: e.target.value}))} />
-                                <input type="tel" placeholder="Téléphone" required value={form.telephone} onChange={e => setForm(p => ({...p, telephone: e.target.value}))} />
+                            <div className="form-row !flex-col md:!flex-row gap-4 md:gap-4 mb-4 md:mb-0">
+                                <input type="email" placeholder="Email" required value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} className="!mb-0 md:!mb-[20px] w-full" />
+                                <input type="tel" placeholder="Téléphone" required value={form.telephone} onChange={e => setForm(p => ({ ...p, telephone: e.target.value }))} className="w-full" />
                             </div>
-                            <div className="form-row">
-                                <select required value={form.service} onChange={e => setForm(p => ({...p, service: e.target.value}))}>
+                            <div className="form-row mb-4 md:mb-0">
+                                <select required value={form.service} onChange={e => setForm(p => ({ ...p, service: e.target.value }))} className="w-full">
                                     <option value="" disabled>Type de service</option>
                                     <option value="plomberie">Plomberie</option>
                                     <option value="etancheite">Étanchéité</option>
                                     <option value="froid">Froid &amp; Climatisation</option>
                                 </select>
                             </div>
-                            <div className="form-row">
-                                <textarea placeholder="Description du problème" required value={form.message} onChange={e => setForm(p => ({...p, message: e.target.value}))}></textarea>
+                            <div className="form-row mb-4 md:mb-0">
+                                <textarea placeholder="Description du problème" required value={form.message} onChange={e => setForm(p => ({ ...p, message: e.target.value }))} className="w-full"></textarea>
                             </div>
                             <div className="checkbox-row">
-                                <input type="checkbox" id="confirm-info" required checked={form.rgpd} onChange={e => setForm(p => ({...p, rgpd: e.target.checked}))} />
+                                <input type="checkbox" id="confirm-info" required checked={form.rgpd} onChange={e => setForm(p => ({ ...p, rgpd: e.target.checked }))} />
                                 <label htmlFor="confirm-info">Je confirme que les informations fournies sont exactes.</label>
                             </div>
-                            {status === 'error' && <p style={{color: 'red', marginBottom: '10px'}}>Une erreur est survenue. Veuillez réessayer.</p>}
+                            {status === 'error' && <p style={{ color: 'red', marginBottom: '10px' }}>Une erreur est survenue. Veuillez réessayer.</p>}
                             <button type="submit" className="submit-btn" disabled={status === 'sending'}>
                                 {status === 'sending' ? 'Envoi en cours...' : 'Envoyer ma demande'}
                             </button>
@@ -140,12 +140,12 @@ const Contact = () => {
             </div>
 
             {/* 3. Maps Section */}
-            <div className="contact-maps reveal reveal-up">
-                <div className="map-container">
+            <div className="contact-maps reveal reveal-up !h-[300px] md:!h-[500px]">
+                <div className="map-container !h-full">
                     <iframe
                         title="Map PREFCI-BAT"
                         src={`https://maps.google.com/maps?q=${data.mapCoordinates}&hl=fr&z=15&output=embed`}
-                        loading="lazy" referrerPolicy="no-referrer-when-downgrade">
+                        loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="!w-full !h-full">
                     </iframe>
                 </div>
             </div>

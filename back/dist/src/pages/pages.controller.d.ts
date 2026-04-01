@@ -4,8 +4,8 @@ export declare class PagesController {
     constructor(pagesService: PagesService);
     findAll(): Promise<{
         idPage: number;
-        nomPage: string;
         slug: string;
+        nomPage: string;
     }[]>;
     findOne(slug: string): Promise<any>;
 }

@@ -4,10 +4,11 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaClock } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
-        <footer className="footer-section">
-            <div className="footer-content reveal reveal-up">
+        <footer className="footer-section !px-6 md:!px-10 lg:!px-[100px] !py-[60px] md:!py-[40px]">
+            <div className="footer-content reveal reveal-up !grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-14">
                 {/* A propos */}
                 <div className="footer-column">
                     <h3>À PROPOS</h3>
@@ -16,9 +17,9 @@ const Footer = () => {
                     </p>
                     <div className="footer-socials">
                         {['LinkedIn', 'Facebook', 'Twitter', 'Instagram'].map((social, i) => (
-                            <a 
-                                href="#" 
-                                aria-label={social} 
+                            <a
+                                href="#"
+                                aria-label={social}
                                 key={i}
                             >
                                 {social === 'LinkedIn' ? 'in' : social[0].toLowerCase()}
@@ -58,7 +59,7 @@ const Footer = () => {
             </div>
 
             <div className="footer-bottom">
-                <p>&copy; {new Date().getFullYear()} PREFCI-BAT SARL. Réalisé avec excellence.</p>
+                <p>&copy; {new Date().getFullYear()} PREFCI-BAT SARL. Réalisé avec excellence par l'<Link to="https://agencemosesart.com/" target='_blank'><strong>Agence Moses Art</strong></Link>.</p>
             </div>
         </footer>
     );

@@ -133,56 +133,16 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: opacity 0.8s ease-in-out;
 }
 
-.image-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
 
-.before-img.visible, .after-img.visible {
-  opacity: 1;
-  z-index: 1;
-}
-
-.before-img.hidden, .after-img.hidden {
-  opacity: 0;
-  z-index: 0;
-}
-
-.avant-apres-badge {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 8px 15px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  display: flex;
-  gap: 10px;
-  z-index: 3;
-}
-
-.avant-apres-badge span.avant,
-.avant-apres-badge span.apres {
-  color: #888;
-  transition: color 0.3s;
-}
-
-.avant-apres-badge span.avant.active,
-.avant-apres-badge span.apres.active {
-  color: var(--primary-color, #4cc9f0);
-}
 
 .realisation-text {
   width: 55%;
   padding-right: 40px;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 
 .realisation-text h3 {

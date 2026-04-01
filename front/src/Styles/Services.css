@@ -1,6 +1,5 @@
 /* Services.css */
 
-
 .services-banniere {
   width: 100vw;
   height: 70vh;
@@ -40,11 +39,8 @@
 .service-detail-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 60px;
-}
-
-.service-detail-row.reverse {
-  flex-direction: row-reverse;
 }
 
 .service-detail-img {
@@ -68,6 +64,8 @@
 .service-detail-text {
   width: 55%;
   transition: transform 0.4s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .service-detail-row:hover .service-detail-text {
@@ -113,43 +111,4 @@
 
 .service-btn:hover {
   background-color: #3bb5d9;
-}
-
-@media (max-width: 992px) {
-  .slanted-panel {
-    transform: none;
-    border-right: none;
-    border-bottom: 5px solid #fff;
-    flex-direction: column;
-  }
-
-  .services-banniere-slanted {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .slanted-image {
-    width: 100%;
-    left: 0;
-    transform: none;
-    position: relative;
-    height: 250px;
-  }
-
-  .slanted-title {
-    transform: translate(-50%, -50%);
-  }
-
-  .service-detail-row {
-    flex-direction: column;
-  }
-
-  .service-detail-row.reverse {
-    flex-direction: column;
-  }
-
-  .service-detail-img,
-  .service-detail-text {
-    width: 100%;
-  }
 }

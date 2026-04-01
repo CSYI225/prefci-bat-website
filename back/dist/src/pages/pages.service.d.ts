@@ -6,8 +6,8 @@ export declare class PagesService {
     constructor(prisma: PrismaService, adminContentService: AdminContentService);
     findAll(): Promise<{
         idPage: number;
-        nomPage: string;
         slug: string;
+        nomPage: string;
     }[]>;
     findOne(slug: string): Promise<any>;
 }

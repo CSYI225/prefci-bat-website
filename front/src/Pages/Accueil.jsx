@@ -8,6 +8,7 @@ import Eleveur from '../Images/eleveur.png';
 import Qalilab from '../Images/qalilab.png';
 import Copharmed from '../Images/copharmed.png';
 import Carena from '../Images/carena.webp';
+import { NavLink } from 'react-router-dom';
 
 const Accueil = () => {
 
@@ -19,7 +20,7 @@ const Accueil = () => {
     quiSommesNous: {
       titreNoir: "DES PROFESSIONNELS ENGAGÉS À",
       titreBleu: "RÉSOUDRE VOS PROBLÈMES",
-      description: "PREFCI-BAT SARL est une entreprise leader dans le domaine de la plomberie et de la climatisation. Nous mettons notre savoir-faire au service de particuliers et de professionnels pour des interventions rapides, des installations fiables et un suivi rigoureux.",
+      description: "PREFCI-BAT SARL est une entreprise leader dans le domaine de la plomberie et de l'étanchéité. Nous mettons notre savoir-faire au service de particuliers et de professionnels pour des interventions rapides, des installations fiables et un suivi rigoureux.",
       description2: "De l'étude à l'exécution de vos projets, nous vous accompagnons grâce à une expertise technique éprouvée et un matériel de pointe. Notre priorité est de vous garantir des résultats irréprochables et de vous assurer confort et tranquillité d'esprit, quelles que soient les exigences de votre bâtiment.",
       image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80",
     },
@@ -85,7 +86,7 @@ const Accueil = () => {
               // Deep merge logic specially for arrays if present
               const serverSection = resData[sectionKey];
               merged[sectionKey] = { ...merged[sectionKey], ...serverSection };
-              
+
               // Ensure explicit array fallbacks if backend array is completely empty
               if (sectionKey === "nosServices" && (!serverSection.services || serverSection.services.length === 0)) {
                 merged.nosServices.services = prev.nosServices.services;
@@ -107,15 +108,15 @@ const Accueil = () => {
     fetch('http://localhost:3000/realisations')
       .then(res => res.json())
       .then(resData => {
-        if(resData && resData.length > 0) {
+        if (resData && resData.length > 0) {
           const mapped = resData.map(r => ({
             id: r.idRealisation,
             title: r.titre,
             desc: r.descriptionProjet || '',
             imgBefore: r.imageAvant
               ? (r.imageAvant.startsWith('data:') || r.imageAvant.startsWith('http') || r.imageAvant.startsWith('/')
-                  ? r.imageAvant
-                  : `http://localhost:3000/uploads/${r.imageAvant}`)
+                ? r.imageAvant
+                : `http://localhost:3000/uploads/${r.imageAvant}`)
               : '',
           }));
           setRealisationsData(mapped);
@@ -124,8 +125,16 @@ const Accueil = () => {
       .catch(err => console.warn("Using default Realisations content", err));
   }, []);
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsToShow = 5;
+  const itemsToShow = isMobile ? 1 : 5;
   const maxIndex = Math.max(0, realisationsData.length - itemsToShow);
   const realDirectionRef = useRef(1);
   const isRealHovered = useRef(false);
@@ -154,7 +163,7 @@ const Accueil = () => {
   const progressPercent = maxIndex > 0 ? (currentIndex / maxIndex) * 100 : 0;
 
   const [avisIndex, setAvisIndex] = useState(0);
-  const avisToShow = 3;
+  const avisToShow = isMobile ? 1 : 3;
   const maxAvisIndex = Math.max(0, data.avisClients.avis.length - avisToShow);
   const avisDirectionRef = useRef(1);
   const isAvisHovered = useRef(false);
@@ -186,88 +195,101 @@ const Accueil = () => {
     <div className="accueil-page">
 
       {/* Hero Content */}
-      <div className="banniere reveal reveal-up">
+      <div className="banniere reveal reveal-up !h-[60vh] md:!h-[70vh]">
         {data.banniere.image && (
-           <img src={data.banniere.image} alt="Banniere" style={{position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', zIndex: -1}} />
+          <img src={data.banniere.image} alt="Banniere" style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', zIndex: -1 }} />
         )}
-        <div className="banniere-text-box reveal reveal-up delay-200" style={{padding: '2rem', borderRadius: '10px'}}>
-          <h2><span className="highlight-bg">{data.banniere.titreNoir || 'FUITE OU ÉTANCHÉITÉ ?'}</span></h2>
-          <h2>{data.banniere.titreBleu || 'RAPIDES ET DURABLES'}</h2>
+        <div className="banniere-text-box reveal reveal-up delay-200 !px-4 md:!px-8" style={{ padding: '2rem', borderRadius: '10px' }}>
+          <h2 className="!text-[2.2rem] md:!text-[3.5rem] text-center"><span className="highlight-bg">{data.banniere.titreNoir || 'FUITE OU ÉTANCHÉITÉ ?'}</span></h2>
+          <h2 className="!text-[2.2rem] md:!text-[3.5rem] mt-2 md:mt-0 text-center">{data.banniere.titreBleu || 'RAPIDES ET DURABLES'}</h2>
         </div>
       </div>
 
       {/* 1. About Section */}
-      <section className="aboutus-section">
-        <div className="aboutus">
-          <div className="aboutus-image reveal reveal-left">
-            <img src={data.quiSommesNous.image || "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80"} alt="Technicien avec mallette" />
-            <div className="cadre-bleu"></div>
+      <section className="aboutus-section !h-auto lg:!h-[100vh] !py-20 lg:!py-0">
+        <div className="aboutus !w-[90vw] lg:!w-[80vw] !h-auto lg:!h-[100vh] !flex-col lg:!flex-row gap-16 lg:gap-0">
+          <div className="aboutus-image reveal reveal-left !w-full lg:!w-[40%] !h-auto lg:!h-[62%] flex justify-center lg:block">
+            <img src={data.quiSommesNous.image || "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80"} alt="Technicien avec mallette" className="!w-[300px] lg:!w-[400px] !h-[300px] lg:!h-[400px]" />
+            <div className="cadre-bleu hidden lg:block"></div>
           </div>
-          <div className="aboutus-text reveal reveal-right">
+          <div className="aboutus-text reveal reveal-right !w-full lg:!w-[57%] !h-auto lg:!h-[62%] !text-center lg:!text-left">
             <h4 className="section-subtitle-left">QUI SOMMES-NOUS</h4>
-            <h2 className="section-title-left">{data.quiSommesNous.titreNoir} <span>{data.quiSommesNous.titreBleu}</span></h2>
-            <p style={{whiteSpace: 'pre-line'}}>{data.quiSommesNous.description}</p>
+            <h2 className="section-title-left">{data.quiSommesNous.titreNoir} <br className="lg:hidden" /><span>{data.quiSommesNous.titreBleu}</span></h2>
+            <p style={{ whiteSpace: 'pre-line' }}>{data.quiSommesNous.description}</p>
             {data.quiSommesNous.description === "PREFCI-BAT SARL est une entreprise leader dans le domaine de la plomberie et de la climatisation. Nous mettons notre savoir-faire au service de particuliers et de professionnels pour des interventions rapides, des installations fiables et un suivi rigoureux." && (
-              <p style={{whiteSpace: 'pre-line'}}>{data.quiSommesNous.description2}</p>
+              <p style={{ whiteSpace: 'pre-line' }}>{data.quiSommesNous.description2}</p>
             )}
           </div>
         </div>
       </section>
 
       {/* 2. Services Section */}
-      <section className="services-section">
-        <div className="section-tittle-box reveal reveal-up">
+      <section className="services-section !h-auto lg:!h-[100vh] !py-20 lg:!py-0">
+        <div className="section-tittle-box reveal reveal-up !w-[90vw] lg:!w-[70vw] !h-auto lg:!h-[30vh] mb-10 lg:mb-0">
           <h4 className="section-subtitle">NOS EXPERTISES</h4>
           <h2 className="section-title2">{data.nosServices.titreNoir} <br /><span>{data.nosServices.titreBleu}</span></h2>
-          <p className="services-desc" style={{whiteSpace: 'pre-line'}}>{data.nosServices.description}</p>
+          <p className="services-desc !w-full lg:!w-[65vw]" style={{ whiteSpace: 'pre-line' }}>{data.nosServices.description}</p>
         </div>
-        <div className="services">
+        <div className="services !w-[90vw] lg:!w-[75vw] !h-auto lg:!h-[55vh] !flex-col lg:!flex-row gap-8 lg:gap-0">
           {(data.nosServices.services || []).map((service, i) => {
-            const fallbackImg = realisationsData && realisationsData.length > 0 
-              ? realisationsData[i % realisationsData.length]?.imgBefore 
+            const fallbackImg = realisationsData && realisationsData.length > 0
+              ? realisationsData[i % realisationsData.length]?.imgBefore
               : "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=800&q=80"; // Default plumbing image
 
             return (
-              <div className={`service-card reveal reveal-up delay-${(i + 1) * 100}`} key={service.id || i}>
+              <Link
+                to={`/Services#service-${service.id_service || service.idService || service.id}`}
+                className={`service-card reveal reveal-up delay-${(i + 1) * 100} !w-full lg:!w-[30%] !h-[350px] lg:!h-full`}
+                key={service.id_service || service.idService || service.id || i}
+              >
                 <div className="service-img" style={{ backgroundImage: `url(${service.image || fallbackImg})` }}>
                   <div className="service-info">
                     <h3 className='service-titre'>{service.nom}</h3>
-                    <p className='service-description' style={{whiteSpace: 'pre-line'}}>{service.description}</p>
+                    <p className='service-description' style={{ whiteSpace: 'pre-line' }}>{service.description}</p>
                   </div>
                   <div className="service-overlay"></div>
                   <div className="service-icon-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
       </section>
 
       {/* 3. Realisations Section */}
-      <section className="realisations-section">
-        <div className="section-tittle-box reveal reveal-up">
+      <section className="realisations-section !h-auto lg:!h-[100vh] !py-20 lg:!py-0">
+        <div className="section-tittle-box reveal reveal-up !w-[90vw] lg:!w-[70vw] !h-auto lg:!h-[30vh] mb-10 lg:mb-0">
           <h4 className="section-subtitle">NOS RÉALISATIONS</h4>
-          <h2 className="section-title">{data.nosRealisations.titreNoir} <span>{data.nosRealisations.titreBleu}</span></h2>
-          <p className="realisations-desc" style={{whiteSpace: 'pre-line'}}>{data.nosRealisations.description}</p>
+          <h2 className="section-title">{data.nosRealisations.titreNoir} <br className="md:hidden" /><span>{data.nosRealisations.titreBleu}</span></h2>
+          <p className="realisations-desc !w-full lg:!w-[650px] !max-w-full" style={{ whiteSpace: 'pre-line' }}>{data.nosRealisations.description}</p>
         </div>
         <div className="gallery-carousel"
           onMouseEnter={() => isRealHovered.current = true}
           onMouseLeave={() => isRealHovered.current = false}
         >
-          <div className="gallery-track" style={{ transform: `translateX(-${currentIndex * (220 + 20)}px)` }}>
+          <div
+            className="gallery-track"
+            style={
+              maxIndex === 0
+                ? { width: '100%', justifyContent: 'center', transform: 'none' }
+                : {
+                  transform: `translateX(calc(-${currentIndex} * (var(--gallery-item-width, 220px) + var(--gallery-gap, 20px))))`
+                }
+            }
+          >
             {realisationsData.map((item, index) => (
-              <Link 
+              <Link
                 to={`/Realisations#project-${item.id}`}
-                className={`gallery-item ${index % 2 !== 0 ? 'odd-item-offset' : ''}`} 
+                className={`gallery-item ${index % 2 !== 0 ? 'odd-item-offset' : ''}`}
                 key={item.id}
               >
                 <img src={item.imgBefore} alt={item.title} />
                 <div className="gallery-overlay"></div>
                 <div className="gallery-info">
                   <h3>{item.title}</h3>
-                  <p style={{whiteSpace: 'pre-line'}}>{item.desc}</p>
+                  <p style={{ whiteSpace: 'pre-line' }}>{item.desc}</p>
                 </div>
                 <div className="gallery-icon-btn">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -285,41 +307,41 @@ const Accueil = () => {
         </div>
       </section>
 
-      <section className="partenaires-section reveal reveal-up">
-        <div className="section-tittle-box">
+      <section className="partenaires-section reveal reveal-up !h-auto lg:!h-[100vh] !py-20 lg:!py-0">
+        <div className="section-tittle-box !w-[90vw] lg:!w-[70vw] !h-auto lg:!h-[30vh] mb-10 lg:mb-0">
           <h4 className="section-subtitle">NOS PARTENAIRES</h4>
-          <h2 className="section-title">{data.nosPartenaires.titreNoir} <span>{data.nosPartenaires.titreBleu}</span></h2>
-          <p className="partenaires-desc" style={{whiteSpace: 'pre-line'}}>{data.nosPartenaires.description}</p>
+          <h2 className="section-title">{data.nosPartenaires.titreNoir} <br className="md:hidden" /><span>{data.nosPartenaires.titreBleu}</span></h2>
+          <p className="partenaires-desc !w-full lg:!w-[650px] !max-w-full" style={{ whiteSpace: 'pre-line' }}>{data.nosPartenaires.description}</p>
         </div>
-        <div className="partenaires-grid" style={{ gap: '2rem' }}>
+        <div className="partenaires-grid !w-[90vw] lg:!w-[75vw]">
           {data.nosPartenaires.partenaires.map((partenaire, i) => (
-             <img key={i} src={partenaire.image || fallbackReals[0]?.imgBefore} alt={partenaire.nom || `Partenaire ${i}`} style={{width: '100%', height: 100, objectFit: 'contain'}} />
+            <img key={i} src={partenaire.image || fallbackReals[0]?.imgBefore} alt={partenaire.nom || `Partenaire ${i}`} />
           ))}
         </div>
       </section>
 
-      <section className="avis-section">
-        <div className="section-tittle-box reveal reveal-up">
+      <section className="avis-section !h-auto lg:!h-[100vh] !py-20 lg:!py-0">
+        <div className="section-tittle-box reveal reveal-up !w-[90vw] lg:!w-[70vw] !h-auto lg:!h-[30vh] mb-10 lg:mb-0">
           <h4 className="section-subtitle">AVIS DE NOS CLIENTS</h4>
-          <h2 className="section-title2">{data.avisClients.titreNoir} <span>{data.avisClients.titreBleu}</span></h2>
-          <p className="avis-desc" style={{whiteSpace: 'pre-line'}}>{data.avisClients.description}</p>
+          <h2 className="section-title2">{data.avisClients.titreNoir} <br className="md:hidden" /><span>{data.avisClients.titreBleu}</span></h2>
+          <p className="avis-desc !w-full lg:!w-[600px] !max-w-full" style={{ whiteSpace: 'pre-line' }}>{data.avisClients.description}</p>
         </div>
 
         <div className="avis-carousel" onMouseEnter={() => isAvisHovered.current = true} onMouseLeave={() => isAvisHovered.current = false}>
-          <div className="avis-track" style={{ transform: `translateX(-${avisIndex * (350 + 30)}px)` }}>
+          <div className="avis-track" style={{ transform: `translateX(calc(-${avisIndex} * (var(--avis-item-width, 350px) + var(--avis-gap, 30px))))` }}>
             {data.avisClients.avis.map((avis, i) => (
               <div className="avis-card" key={avis.id || i}>
                 <div className="avis-header">
-                  <div className="avis-avatar">{avis.avatar || avis.nom?.substring(0,2).toUpperCase()}</div>
+                  <div className="avis-avatar">{avis.avatar || avis.nom?.substring(0, 2).toUpperCase()}</div>
                   <div className="avis-info-text">
                     <h5>{avis.nom}</h5>
                     <span className="avis-role">{avis.role}</span>
                   </div>
                 </div>
-                <div className="avis-body" style={{whiteSpace: 'pre-line'}}>
+                <div className="avis-body" style={{ whiteSpace: 'pre-line' }}>
                   "{avis.texte}"
                 </div>
-                <div style={{color: '#f39c12', marginTop: 10}}>{"★".repeat(parseInt(avis.etoiles || 5))}</div>
+                <div style={{ color: '#f39c12', marginTop: 10 }}>{"★".repeat(parseInt(avis.etoiles || 5))}</div>
               </div>
             ))}
           </div>
@@ -335,22 +357,22 @@ const Accueil = () => {
       </section>
 
       {/* 6. Contact Form Section */}
-      <section className="devis-section">
-        <div className="devis">
-          <div className="devis-text reveal reveal-left">
+      <section className="devis-section !h-auto lg:!h-[100vh] !py-20 lg:!py-0">
+        <div className="devis !w-[90vw] lg:!w-[85vw] !h-auto lg:!h-[50vh] !flex-col lg:!flex-row gap-12 lg:gap-0">
+          <div className="devis-text reveal reveal-left !w-full lg:!w-[45%] !h-auto lg:!h-[62%] !text-center lg:!text-left">
             <h4 className="section-subtitle-left">DEMANDER UN DEVIS GRATUIT</h4>
             <h2 className="section-title-left">RÉPONSE RAPIDE SOUS 24H <br /><span>SANS ENGAGEMENT</span></h2>
-            <p>
+            <p className="mx-auto lg:mx-0">
               Remplissez ce formulaire et notre équipe se fera un plaisir de vous recontacter dans les plus brefs délais avec une estimation personnalisée.
             </p>
           </div>
-          <div className="devis-form-container reveal reveal-right">
+          <div className="devis-form-container reveal reveal-right !w-full lg:!w-[45%] !p-6 md:!p-10">
             {devisStatus === 'success' ? (
-              <div style={{padding: '40px', textAlign: 'center'}}>
-                <div style={{fontSize: '3rem', color: '#4cc9f0', marginBottom: '15px'}}>✓</div>
-                <h3 style={{color: '#222', marginBottom: '10px'}}>Demande envoyée !</h3>
-                <p style={{color: '#666'}}>Notre équipe vous contactera sous 24h.</p>
-                <button className="btn btn-primary" style={{marginTop: '20px'}} onClick={() => { setDevisStatus(null); setDevisForm({ nom: '', prenom: '', email: '', telephone: '', service: '', message: '', rgpd: false }); }}>Nouvelle demande</button>
+              <div style={{ padding: '40px', textAlign: 'center' }}>
+                <div style={{ fontSize: '3rem', color: '#4cc9f0', marginBottom: '15px' }}>✓</div>
+                <h3 style={{ color: '#222', marginBottom: '10px' }}>Demande envoyée !</h3>
+                <p style={{ color: '#666' }}>Notre équipe vous contactera sous 24h.</p>
+                <button className="btn btn-primary" style={{ marginTop: '20px' }} onClick={() => { setDevisStatus(null); setDevisForm({ nom: '', prenom: '', email: '', telephone: '', service: '', message: '', rgpd: false }); }}>Nouvelle demande</button>
               </div>
             ) : (
               <form className="devis-form" onSubmit={async (e) => {
@@ -369,15 +391,15 @@ const Accueil = () => {
                 }
               }}>
                 <div className="form-row grid-2-col">
-                  <input type="text" placeholder="Nom" required value={devisForm.nom} onChange={e => setDevisForm(p => ({...p, nom: e.target.value}))} />
-                  <input type="text" placeholder="Prénom(s)" required value={devisForm.prenom} onChange={e => setDevisForm(p => ({...p, prenom: e.target.value}))} />
+                  <input type="text" placeholder="Nom" required value={devisForm.nom} onChange={e => setDevisForm(p => ({ ...p, nom: e.target.value }))} />
+                  <input type="text" placeholder="Prénom(s)" required value={devisForm.prenom} onChange={e => setDevisForm(p => ({ ...p, prenom: e.target.value }))} />
                 </div>
                 <div className="form-row grid-2-col">
-                  <input type="email" placeholder="Email" required value={devisForm.email} onChange={e => setDevisForm(p => ({...p, email: e.target.value}))} />
-                  <input type="tel" placeholder="Téléphone" required value={devisForm.telephone} onChange={e => setDevisForm(p => ({...p, telephone: e.target.value}))} />
+                  <input type="email" placeholder="Email" required value={devisForm.email} onChange={e => setDevisForm(p => ({ ...p, email: e.target.value }))} />
+                  <input type="tel" placeholder="Téléphone" required value={devisForm.telephone} onChange={e => setDevisForm(p => ({ ...p, telephone: e.target.value }))} />
                 </div>
                 <div className="form-row">
-                  <select required value={devisForm.service} onChange={e => setDevisForm(p => ({...p, service: e.target.value}))}>
+                  <select required value={devisForm.service} onChange={e => setDevisForm(p => ({ ...p, service: e.target.value }))}>
                     <option value="" disabled>Type de service</option>
                     <option value="plomberie">Plomberie</option>
                     <option value="sanitaire">Sanitaire</option>
@@ -385,13 +407,13 @@ const Accueil = () => {
                   </select>
                 </div>
                 <div className="form-row">
-                  <textarea placeholder="Description de votre besoin" rows="4" required value={devisForm.message} onChange={e => setDevisForm(p => ({...p, message: e.target.value}))}></textarea>
+                  <textarea placeholder="Description de votre besoin" rows="4" required value={devisForm.message} onChange={e => setDevisForm(p => ({ ...p, message: e.target.value }))}></textarea>
                 </div>
                 <div className="form-row checkbox-row">
-                  <input type="checkbox" id="rgpd" required checked={devisForm.rgpd} onChange={e => setDevisForm(p => ({...p, rgpd: e.target.checked}))} />
+                  <input type="checkbox" id="rgpd" required checked={devisForm.rgpd} onChange={e => setDevisForm(p => ({ ...p, rgpd: e.target.checked }))} />
                   <label htmlFor="rgpd">J'accepte que mes données soient utilisées pour me recontacter</label>
                 </div>
-                {devisStatus === 'error' && <p style={{color: 'red', marginBottom: '10px'}}>Une erreur est survenue. Veuillez réessayer.</p>}
+                {devisStatus === 'error' && <p style={{ color: 'red', marginBottom: '10px' }}>Une erreur est survenue. Veuillez réessayer.</p>}
                 <button type="submit" className="btn btn-primary btn-full" disabled={devisStatus === 'sending'}>
                   {devisStatus === 'sending' ? 'Envoi en cours...' : 'Envoyer ma demande'}
                 </button>
@@ -402,11 +424,11 @@ const Accueil = () => {
       </section>
 
       {/* 7. CTA Banner Section */}
-      <section className="cta-banner">
-        <div className="cta-content">
-          <h2>{data.banniereContact.titreNoir} <span>{data.banniereContact.titreBleu}</span></h2>
-          <p>{data.banniereContact.description}</p>
-          <button className="btn btn-white cta-btn">CONTACTEZ-NOUS</button>
+      <section className="cta-banner !h-auto md:!h-[50vh] !py-20 md:!py-0 !mb-10 md:!mb-[100px]">
+        <div className="cta-content !w-[90vw] md:!w-[70vw] !h-auto md:!h-full !py-12 md:!py-0 md:rounded-none">
+          <h2 className="!text-[1.8rem] md:!text-[2.5rem] px-4">{data.banniereContact.titreNoir} <br className="md:hidden" /><span>{data.banniereContact.titreBleu}</span></h2>
+          <p className="!text-[1rem] md:!text-[1.2rem] px-4">{data.banniereContact.description}</p>
+          <NavLink to="/Contact" className="btn btn-white cta-btn">CONTACTEZ-NOUS</NavLink>
         </div>
       </section>
 
