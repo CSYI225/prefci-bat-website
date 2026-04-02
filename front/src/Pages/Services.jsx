@@ -31,9 +31,11 @@ const Services = () => {
     const [services, setServices] = useState(defaultServices);
     const [banner, setBanner] = useState({ titreNoir: "NOS SERVICES", titreBleu: "RÉSULTATS VISIBLES", image: "" });
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
     useEffect(() => {
         // Fetch Services
-        fetch('http://localhost:3000/admin/services')
+        fetch(`${API_URL}/admin/services`)
             .then(res => res.json())
             .then(data => {
                 if (data && data.length > 0) {
@@ -64,7 +66,7 @@ const Services = () => {
             .catch(err => console.warn("Using default Services content", err));
 
         // Fetch Banner
-        fetch('http://localhost:3000/pages/services')
+        fetch(`${API_URL}/pages/services`)
             .then(res => res.json())
             .then(pageData => {
                 if (pageData && pageData.banniere) setBanner(pageData.banniere);

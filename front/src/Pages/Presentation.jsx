@@ -118,15 +118,17 @@ const Presentation = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
     const fixImagePath = (img) => {
         if (!img || typeof img !== 'string') return "";
         if (img.startsWith('data:') || img.startsWith('http') || img.startsWith('/')) return img;
-        return `http://localhost:3000/uploads/${img}`;
+        return `${API_URL}/uploads/${img}`;
     };
 
     useEffect(() => {
         // Fetch Page Content
-        fetch('http://localhost:3000/pages/presentation')
+        fetch(`${API_URL}/pages/presentation`)
             .then(res => res.json())
             .then(resData => {
                 setData(prev => {
@@ -191,7 +193,7 @@ const Presentation = () => {
             .catch(err => console.warn("Using default Presentation content", err));
 
         // Fetch Accueil page content to get the same services as the Home page
-        fetch('http://localhost:3000/pages/accueil')
+        fetch(`${API_URL}/pages/accueil`)
             .then(res => res.json())
             .then(accueilData => {
                 const nosServicesContent = accueilData?.nosServices?.services;
@@ -220,7 +222,7 @@ const Presentation = () => {
                     // already set above
                 } else {
                     // Fallback : services du module Services (ServicesAdmin)
-                    fetch('http://localhost:3000/services')
+                    fetch(`${API_URL}/services`)
                         .then(res => res.json())
                         .then(sData => {
                             if (sData && sData.length > 0) {
@@ -235,7 +237,7 @@ const Presentation = () => {
             })
             .catch(() => {
                 // Fallback si /pages/accueil est inaccessible
-                fetch('http://localhost:3000/services')
+                fetch(`${API_URL}/services`)
                     .then(res => res.json())
                     .then(sData => {
                         if (sData && sData.length > 0) {
@@ -249,7 +251,7 @@ const Presentation = () => {
             });
 
         // Fetch Realisations for fallback images on service cards
-        fetch('http://localhost:3000/realisations')
+        fetch(`${API_URL}/realisations`)
             .then(res => res.json())
             .then(rData => { if (rData && rData.length > 0) setRealisationsData(rData); })
             .catch(() => { });
@@ -350,11 +352,11 @@ const Presentation = () => {
                         const finalImage = (service.image && typeof service.image === 'string')
                             ? (service.image.startsWith('data:') || service.image.startsWith('http') || service.image.startsWith('/')
                                 ? service.image
-                                : `http://localhost:3000/uploads/${service.image}`)
+                                : `${API_URL}/uploads/${service.image}`)
                             : (fallbackImg && typeof fallbackImg === 'string' && (fallbackImg.startsWith('data:') || fallbackImg.startsWith('http') || fallbackImg.startsWith('/'))
                                 ? fallbackImg
                                 : (fallbackImg && typeof fallbackImg === 'string'
-                                    ? `http://localhost:3000/uploads/${fallbackImg}`
+                                    ? `${API_URL}/uploads/${fallbackImg}`
                                     : ServicesImg));
 
                         return (

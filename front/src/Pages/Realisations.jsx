@@ -11,17 +11,18 @@ const Realisations = () => {
     const [activeFilter, setActiveFilter] = useState('TOUTES');
     const [visibleCount, setVisibleCount] = useState(3);
     const [banner, setBanner] = useState({ titreNoir: "NOS RÉALISATIONS", titreBleu: "RÉSULTATS VISIBLES", image: "" });
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
     const fixImagePath = (img) => {
         if (!img) return "";
         if (img.startsWith('data:') || img.startsWith('http') || img.startsWith('/')) return img;
-        return `http://localhost:3000/uploads/${img}`;
+        return `${API_URL}/uploads/${img}`;
     };
 
     // Fetch initial API data
     useEffect(() => {
         // Fetch Realisations
-        fetch('http://localhost:3000/admin/realisations')
+        fetch(`${API_URL}/admin/realisations`)
             .then(res => res.json())
             .then(data => {
                 if (data && data.length > 0) {
@@ -70,7 +71,7 @@ const Realisations = () => {
             });
 
         // Fetch Banner
-        fetch('http://localhost:3000/admin/pages/realisations/content')
+        fetch(`${API_URL}/admin/pages/realisations/content`)
             .then(res => res.json())
             .then(pageData => {
                 if (pageData && pageData.banniere) setBanner(pageData.banniere);

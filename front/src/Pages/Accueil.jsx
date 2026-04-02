@@ -74,9 +74,11 @@ const Accueil = () => {
   const [devisForm, setDevisForm] = useState({ nom: '', prenom: '', email: '', telephone: '', service: '', message: '', rgpd: false });
   const [devisStatus, setDevisStatus] = useState(null); // null | 'sending' | 'success' | 'error'
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
   useEffect(() => {
     // 1. Fetch Page Content
-    fetch('http://localhost:3000/pages/accueil')
+    fetch(`${API_URL}/pages/accueil`)
       .then(res => res.json())
       .then(resData => {
         setData(prev => {
@@ -105,7 +107,7 @@ const Accueil = () => {
       .catch(err => console.warn("Using default Accueil content", err));
 
     // 2. Fetch Realisations
-    fetch('http://localhost:3000/realisations')
+    fetch(`${API_URL}/realisations`)
       .then(res => res.json())
       .then(resData => {
         if (resData && resData.length > 0) {
@@ -116,7 +118,7 @@ const Accueil = () => {
             imgBefore: r.imageAvant
               ? (r.imageAvant.startsWith('data:') || r.imageAvant.startsWith('http') || r.imageAvant.startsWith('/')
                 ? r.imageAvant
-                : `http://localhost:3000/uploads/${r.imageAvant}`)
+                : `${API_URL}/uploads/${r.imageAvant}`)
               : '',
           }));
           setRealisationsData(mapped);
@@ -382,7 +384,7 @@ const Accueil = () => {
                 e.preventDefault();
                 setDevisStatus('sending');
                 try {
-                  const res = await fetch('http://localhost:3000/devis', {
+                  const res = await fetch(`${API_URL}/devis`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(devisForm)

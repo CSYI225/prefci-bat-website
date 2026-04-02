@@ -23,6 +23,8 @@ const Contact = () => {
     const [status, setStatus] = useState(null); // null | 'sending' | 'success' | 'error'
     const location = useLocation();
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
     useEffect(() => {
         if (location.hash === '#contact-form') {
             const el = document.getElementById('contact-form');
@@ -33,7 +35,7 @@ const Contact = () => {
     }, [location]);
 
     useEffect(() => {
-        fetch('http://localhost:3000/pages/contact')
+        fetch(`${API_URL}/pages/contact`)
             .then(res => res.json())
             .then(resData => {
                 setData(prev => {
@@ -53,7 +55,7 @@ const Contact = () => {
         e.preventDefault();
         setStatus('sending');
         try {
-            const res = await fetch('http://localhost:3000/devis', {
+            const res = await fetch(`${API_URL}/devis`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(form)
