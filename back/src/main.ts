@@ -17,8 +17,18 @@ async function bootstrap() {
   // Validation globale des DTO
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-  // Activation de CORS pour le futur frontend admin
-  app.enableCors();
+  // Activation de CORS avec les origines spécifiques
+  app.enableCors({
+    origin: [
+      'https://admin.prefcibat.com',
+      'https://prefcibat.com',
+      'https://www.prefcibat.com',
+      'http://localhost:5173',
+      'http://localhost:5174',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
 
   // Service des fichiers statiques (uploads)
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
